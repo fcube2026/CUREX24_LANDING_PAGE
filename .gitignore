@@ -1,1 +1,37 @@
-.vercel
+# Node modules
+node_modules/
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# npm debug log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+/dist
+/build
+
+# IDE files
+.idea/
+.vscode/
+
+# TailwindCSS Build
+/.tailwindcss
+
+# Next.js specific (if you're using it)
+.next/
+
+# TypeScript specific
+*.tsbuildinfo
+
+# Optional: Ignore any other large files you don't want in the repo
+*.node
