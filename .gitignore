@@ -35,3 +35,25 @@ yarn-error.log*
 
 # Optional: Ignore any other large files you don't want in the repo
 *.node
+
+# Ignore compiled files
+*.js
+*.map
+
+# Ignore lock files if you want to regenerate them
+package-lock.json
+yarn.lock
+
+# Ignore coverage directory (for testing tools)
+coverage/
+
+# Ignore environment-specific files
+*.env.local
+*.env.development
+*.env.test
+*.env.production
+
+# Ignore log files for various utilities
+*.out
+*.pid
+*.seed
