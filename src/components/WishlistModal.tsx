@@ -7,10 +7,10 @@ const WishlistModal = () => {
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [country, setCountry] = useState("");
+  const [phone, setPhone] = useState("");
+  const [location, setLocation] = useState("");
 
   const [consent, setConsent] = useState(false);
-
   const [success, setSuccess] = useState(false);
 
   /* 🌍 Detect Location */
@@ -21,13 +21,12 @@ const WishlistModal = () => {
 
       navigator.geolocation.getCurrentPosition(
 
-        async (position) => {
+        (position) => {
 
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
-          // For now just store coordinates
-          setCountry(`Lat: ${lat}, Lon: ${lon}`);
+          setLocation(`Lat: ${lat.toFixed(2)}, Lon: ${lon.toFixed(2)}`);
 
         },
 
@@ -52,21 +51,27 @@ const WishlistModal = () => {
       return;
     }
 
+    if (!name) {
+      alert("Name is required");
+      return;
+    }
+
     if (!consent) {
-      alert("Please accept terms");
+      alert("Please accept terms to continue");
       return;
     }
 
     const data = {
       email,
       name,
-      country,
+      phone,
+      location,
       joinedAt: new Date().toISOString()
     };
 
     console.log("Wishlist Data:", data);
 
-    // 👉 Next step: send to Supabase
+    // 👉 Next: send to Supabase
 
     setSuccess(true);
 
@@ -107,7 +112,7 @@ const WishlistModal = () => {
                 </h2>
 
                 <p className="text-gray-600 mt-2">
-                  Get early access when we launch 🚀
+                  Be the first to access when we launch 🚀
                 </p>
 
                 <form
@@ -125,23 +130,33 @@ const WishlistModal = () => {
                     className="w-full p-3 rounded-xl border outline-none"
                   />
 
-                  {/* Name */}
+                  {/* Name (NOW REQUIRED) */}
 
                   <input
                     type="text"
-                    placeholder="Name (optional)"
+                    placeholder="Name (required)"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full p-3 rounded-xl border outline-none"
                   />
 
-                  {/* Country */}
+                  {/* Phone */}
+
+                  <input
+                    type="tel"
+                    placeholder="Phone (optional)"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full p-3 rounded-xl border outline-none"
+                  />
+
+                  {/* Location */}
 
                   <input
                     type="text"
-                    placeholder="Country / City"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
+                    placeholder="City / Country (optional)"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
                     className="w-full p-3 rounded-xl border outline-none"
                   />
 
@@ -197,7 +212,7 @@ const WishlistModal = () => {
                 </h2>
 
                 <p className="mt-2 text-gray-600">
-                  We’ll notify you when we launch.
+                  We’ll notify you when Curex24 launches.
                 </p>
 
                 <button
