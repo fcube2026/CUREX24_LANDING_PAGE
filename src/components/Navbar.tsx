@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import WishlistModal from "./WishlistModal";
 
 const Navbar = () => {
 
@@ -23,12 +22,12 @@ const Navbar = () => {
 
           <img
             src="/logo.png"
-            alt="Curex24"
+            alt="CureX24"
             className="h-12 w-auto"
           />
 
           <span className="font-bold text-2xl text-gray-800 dark:text-white">
-            Curex24
+            CureX24
           </span>
 
         </div>
@@ -61,27 +60,14 @@ const Navbar = () => {
 
           {/* Dark Mode Toggle */}
 
-          <button
+          <motion.button
             onClick={toggleDark}
             className="glass-card px-4 py-2"
-          >
-            🌙
-          </button>
-
-          {/* Coming Soon Badge */}
-
-          <span className="hidden sm:inline text-sm font-medium text-gray-500 dark:text-gray-300">
-            Coming Soon 🚀
-          </span>
-
-          {/* Wishlist Button */}
-
-          <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <WishlistModal />
-          </motion.div>
+            🌙
+          </motion.button>
 
         </div>
 
