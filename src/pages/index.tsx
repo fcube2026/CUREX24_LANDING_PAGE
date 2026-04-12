@@ -40,7 +40,7 @@ export default function Home() {
 
       {/* NEW SECTIONS START */}
 
-      <SmartCareRecommendation />
+      <SmartCareRecommendation icon="🧠" title="Smart Care Recommendation" />
 
       <ServicesSection />
 

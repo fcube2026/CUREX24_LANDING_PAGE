@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import WishlistModal from "./WishlistModal";
+import WishlistButton from "./WishlistButton";
 
 const Hero = () => {
 
@@ -58,7 +58,7 @@ const Hero = () => {
 
           <div className="mt-8 flex justify-center md:justify-start">
 
-            <WishlistModal />
+            <WishlistButton />
 
           </div>
 
