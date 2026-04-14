@@ -16,7 +16,7 @@
 3. Find archived/older conversations and reopen one.
 4. Continue in the restored thread.
 
-> UI labels can vary slightly by Copilot version, but the flow is: **Chat → History → Archived → Restore → Continue**.
+> UI labels can vary slightly by Copilot version, but the flow is: **Chat → Conversation history/History → Archived → Unarchive/Restore → Continue**.
 
 ### 3) Copilot coding agent task/PR sessions (GitHub)
 To continue work from an earlier Copilot coding agent task:
@@ -25,7 +25,7 @@ To continue work from an earlier Copilot coding agent task:
 2. Locate the prior Copilot task PR (common pattern: `copilot/...` branch or Copilot-generated title).
 3. Open that PR and review the existing discussion/checks.
 4. Continue in the same PR thread (add your follow-up request in the PR conversation).
-5. If you need the original task entry point, open **Actions**.
-6. Find the **Running Copilot cloud agent** run that matches your PR branch/title or timestamp, then follow its linked PR.
+5. If you do not know which PR to open, use this alternate path: open **Actions**.
+6. Find the **Running Copilot cloud agent** run that matches your branch/title or timestamp, then open the PR link from that run.
 
 This keeps context in the same task thread instead of starting a brand-new PR/session.
