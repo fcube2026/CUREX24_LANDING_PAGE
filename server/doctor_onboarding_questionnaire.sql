@@ -3,6 +3,7 @@
 -- ⚠️  This script ONLY creates a new table. It does NOT modify or delete
 --     any existing schemas, tables, or data.
 
+-- Ensure gen_random_uuid() is available across environments.
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TABLE IF NOT EXISTS doctor_onboarding_questionnaire (
