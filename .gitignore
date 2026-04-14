@@ -52,10 +52,6 @@ coverage/
 .env.development
 .env.test
 .env.production
-*.env.local
-*.env.development
-*.env.test
-*.env.production
 
 # Ignore log files for various utilities
 *.out
