@@ -48,6 +48,10 @@ yarn.lock
 coverage/
 
 # Ignore environment-specific files
+.env.local
+.env.development
+.env.test
+.env.production
 *.env.local
 *.env.development
 *.env.test
