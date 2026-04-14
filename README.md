@@ -27,7 +27,7 @@ To continue work from an earlier Copilot coding agent task:
 4. Continue in the same PR thread (add your follow-up request in the PR conversation).
 Alternate path (if you do not know which PR to open):
 - Open the repository **Actions** tab.
-- Find the **Running Copilot cloud agent** run that matches your branch/title or timestamp.
+- Find the **running Copilot cloud agent** workflow run that matches your branch/title or timestamp.
 - Open the PR link from that run.
 
 This keeps context in the same task thread instead of starting a brand-new PR/session.
