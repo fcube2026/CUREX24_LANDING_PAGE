@@ -25,6 +25,6 @@ To continue work from an earlier Copilot coding agent task:
 2. Locate the prior Copilot task PR (common pattern: `copilot/...` branch or Copilot-generated title).
 3. Open that PR and review the existing discussion/checks.
 4. Continue in the same PR thread (add your follow-up request in the PR conversation).
-5. If you need the original task entry point, open **Actions** → the related **Running Copilot cloud agent** run → follow the linked PR.
+5. If you need the original task entry point, open **Actions** → find the **Running Copilot cloud agent** run that matches your PR branch/title or timestamp → follow the linked PR.
 
 This keeps context in the same task thread instead of starting a brand-new PR/session.
