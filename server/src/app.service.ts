@@ -12,7 +12,7 @@ export class AppService {
   async testConnection() {
     const client = this.supabaseService.getClient();
     const { data, error } = await client
-      .from('questionnaire_responses')
+      .from('doctor_onboarding_questionnaire')
       .select('count', { count: 'exact', head: true });
 
     if (error) {
@@ -26,10 +26,9 @@ export class AppService {
     const client = this.supabaseService.getClient();
 
     // Directly insert the data as it comes from the UI
-    // Ensure that objects/arrays are stringified if needed, 
-    // although the UI is now responsible for sending the correct format.
+    // Column names must be in snake_case to match doctor_onboarding_questionnaire table
     const { data: result, error } = await client
-      .from('questionnaire_responses')
+      .from('doctor_onboarding_questionnaire')
       .insert([data]);
 
     if (error) {
