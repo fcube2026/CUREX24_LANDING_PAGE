@@ -123,7 +123,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center p-3 sm:p-6">
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-start pt-3 pb-4 px-3 sm:px-6">
       {/* Background Gradients */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]" />
@@ -132,16 +132,7 @@ export default function App() {
       </div>
 
       <div className="w-full max-w-2xl relative z-10">
-        <div className="mb-3 px-2">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-primary/60">
-              Question {currentIndex + 1} of {totalQuestions}
-            </span>
-            <span className="text-xs font-bold text-muted-foreground mr-1">
-              {Math.round(((currentIndex + 1) / totalQuestions) * 100)}% Complete
-            </span>
-          </div>
-
+        <div className="mb-2 px-1">
           <ProgressBar currentStep={currentIndex + 1} totalSteps={totalQuestions} />
         </div>
 
