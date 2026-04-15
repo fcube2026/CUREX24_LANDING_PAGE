@@ -37,7 +37,8 @@ function getExperienceBucket(value: DoctorResponse['experience']) {
   if (text === '5-10') return '5-10';
   if (text === '10+' || text.includes('more than')) return '10+';
 
-  const firstNumber = Number((text.match(/(\d+(?:\.\d+)?)/) || [])[1]);
+  const match = text.match(/(\d+(?:\.\d+)?)/);
+  const firstNumber = match ? Number(match[1]) : Number.NaN;
   if (!Number.isFinite(firstNumber)) return 'Unknown';
   if (firstNumber < 5) return '0-5';
   if (firstNumber < 10) return '5-10';
