@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { QuestionRunner } from './components/QuestionRunner';
 import { Success } from './components/Success';
@@ -23,19 +23,34 @@ export default function App() {
   const totalQuestions = questions.length;
   const currentQuestion = questions[currentIndex];
 
+  // Use refs to avoid stale closures in handleNext (especially for auto-advancing last question)
+  const formDataRef = useRef(formData);
+  const currentIndexRef = useRef(currentIndex);
+
   useEffect(() => {
+    formDataRef.current = formData;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
   }, [formData]);
 
+  useEffect(() => {
+    currentIndexRef.current = currentIndex;
+  }, [currentIndex]);
+
+  // Vite env vars (must start with VITE_)
+  const url = import.meta.env.VITE_FUNCTION_URL as string;
+  const secret = import.meta.env.VITE_FORM_SHARED_SECRET as string;
   const handleNext = async () => {
+    const activeIndex = currentIndexRef.current;
+    
     // normal next
-    if (currentIndex !== totalQuestions - 1) {
-      setCurrentIndex(currentIndex + 1);
+    if (activeIndex !== totalQuestions - 1) {
+      setCurrentIndex(activeIndex + 1);
       return;
     }
 
     // last question => submit
     setIsSubmitting(true);
+    const data = formDataRef.current;
 
     try {
       // Helper: ensure multi-select values are stored as Postgres TEXT[]
@@ -48,27 +63,27 @@ export default function App() {
       // ✅ snake_case columns matching doctor_onboarding_questionnaire table
       const dbRow = {
         // Professional
-        specialization: formData.specialization ?? null,
-        qualification: formData.qualification ?? null,
-        experience: formData.experience ?? null,
-        hospital: formData.hospital ?? null,
-        bio: formData.bio ?? null,
+        specialization: data.specialization ?? null,
+        qualification: data.qualification ?? null,
+        experience: data.experience ?? null,
+        hospital: data.hospital ?? null,
+        bio: data.bio ?? null,
         // Services
-        home_visits: formData.homeVisits ?? null,
-        services: toArray(formData.services),
-        patient_groups: toArray(formData.patientGroups),
-        medical_equipment: toArray(formData.medicalEquipment),
-        emergency_cases: formData.emergencyCases ?? null,
+        home_visits: data.homeVisits ?? null,
+        services: toArray(data.services),
+        patient_groups: toArray(data.patientGroups),
+        medical_equipment: toArray(data.medicalEquipment),
+        emergency_cases: data.emergencyCases ?? null,
         // Availability
-        working_schedule: formData.workingSchedule ?? null,
-        time_slots: toArray(formData.timeSlots),
-        travel_distance: formData.travelDistance ?? null,
-        payment_preference: formData.paymentPreference ?? null,
+        working_schedule: data.workingSchedule ?? null,
+        time_slots: toArray(data.timeSlots),
+        travel_distance: data.travelDistance ?? null,
+        payment_preference: data.paymentPreference ?? null,
         // Platform
-        app_comfort: formData.appComfort ?? null,
-        online_consultations: formData.onlineConsultations ?? null,
-        platform_expectations: toArray(formData.platformExpectations),
-        guidelines_agreement: formData.guidelinesAgreement ?? null,
+        app_comfort: data.appComfort ?? null,
+        online_consultations: data.onlineConsultations ?? null,
+        platform_expectations: toArray(data.platformExpectations),
+        guidelines_agreement: data.guidelinesAgreement ?? null,
       };
 
       // 🚀 Submitting directly to Supabase table

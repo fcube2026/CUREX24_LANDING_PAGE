@@ -9,37 +9,6 @@ export interface Question {
 }
 
 export const questions: Question[] = [
-  // ... existing questions
-  {
-    id: 'specialization',
-    label: 'What is your primary medical specialization?',
-    type: 'select',
-    category: 'Professional',
-    options: [
-      { label: 'General Physician', value: 'general' },
-      { label: 'Pediatrician', value: 'pediatrician' },
-      { label: 'Dermatologist', value: 'dermatologist' },
-      { label: 'Cardiologist', value: 'cardiologist' },
-      { label: 'Orthopedic', value: 'orthopedic' },
-      { label: 'Gynecologist', value: 'gynecologist' },
-      { label: 'Physiotherapist', value: 'physiotherapist' },
-      { label: 'Other', value: 'other' },
-    ],
-  },
-  {
-    id: 'qualification',
-    label: 'What is your highest medical qualification?',
-    type: 'select',
-    category: 'Professional',
-    options: [
-      { label: 'MBBS', value: 'mbbs' },
-      { label: 'MD / MS', value: 'md-ms' },
-      { label: 'BDS', value: 'bds' },
-      { label: 'BAMS / BHMS', value: 'bams-bhms' },
-      { label: 'Physiotherapy Degree', value: 'physiotherapy' },
-      { label: 'Other', value: 'other' },
-    ],
-  },
   {
     id: 'experience',
     label: 'How many years of clinical experience do you have?',

@@ -42,41 +42,42 @@ export default function App() {
     setIsSubmitting(true);
 
     try {
-      // ✅ Using exact UI question IDs as DB column names
+      // Helper: ensure multi-select values are stored as Postgres TEXT[]
+      const toArray = (val: unknown): string[] | null => {
+        if (Array.isArray(val)) return val;
+        if (typeof val === 'string') return [val];
+        return null;
+      };
+
+      // ✅ snake_case columns matching doctor_onboarding_questionnaire table
       const dbRow = {
+        // Professional
         specialization: formData.specialization ?? null,
         qualification: formData.qualification ?? null,
         experience: formData.experience ?? null,
         hospital: formData.hospital ?? null,
         bio: formData.bio ?? null,
-        homeVisits: formData.homeVisits ?? null,
-        services: Array.isArray(formData.services)
-          ? formData.services.join(', ')
-          : formData.services ?? null,
-        patientGroups: Array.isArray(formData.patientGroups)
-          ? formData.patientGroups.join(', ')
-          : formData.patientGroups ?? null,
-        medicalEquipment: Array.isArray(formData.medicalEquipment)
-          ? formData.medicalEquipment.join(', ')
-          : formData.medicalEquipment ?? null,
-        emergencyCases: formData.emergencyCases ?? null,
-        workingSchedule: formData.workingSchedule ?? null,
-        timeSlots: Array.isArray(formData.timeSlots)
-          ? formData.timeSlots.join(', ')
-          : formData.timeSlots ?? null,
-        travelDistance: formData.travelDistance ?? null,
-        paymentPreference: formData.paymentPreference ?? null,
-        appComfort: formData.appComfort ?? null,
-        onlineConsultations: formData.onlineConsultations ?? null,
-        platformExpectations: Array.isArray(formData.platformExpectations)
-          ? formData.platformExpectations.join(', ')
-          : formData.platformExpectations ?? null,
-        guidelinesAgreement: formData.guidelinesAgreement ?? null,
+        // Services
+        home_visits: formData.homeVisits ?? null,
+        services: toArray(formData.services),
+        patient_groups: toArray(formData.patientGroups),
+        medical_equipment: toArray(formData.medicalEquipment),
+        emergency_cases: formData.emergencyCases ?? null,
+        // Availability
+        working_schedule: formData.workingSchedule ?? null,
+        time_slots: toArray(formData.timeSlots),
+        travel_distance: formData.travelDistance ?? null,
+        payment_preference: formData.paymentPreference ?? null,
+        // Platform
+        app_comfort: formData.appComfort ?? null,
+        online_consultations: formData.onlineConsultations ?? null,
+        platform_expectations: toArray(formData.platformExpectations),
+        guidelines_agreement: formData.guidelinesAgreement ?? null,
       };
 
       // 🚀 Submitting directly to Supabase table
       const { error } = await supabase
-        .from('questionnaire_responses')
+        .from('doctor_onboarding_questionnaire')
         .insert([dbRow]);
 
       if (error) throw error;
