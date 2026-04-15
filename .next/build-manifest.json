@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/e0Bdrr-asmCkBBSHP2LRO/_buildManifest.js",
-    "static/e0Bdrr-asmCkBBSHP2LRO/_ssgManifest.js"
+    "static/ubpC8K6LS6K2fv8wZdQMH/_buildManifest.js",
+    "static/ubpC8K6LS6K2fv8wZdQMH/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "rootMainFilesTree": {},
@@ -22,7 +22,7 @@
       "static/chunks/webpack-b66ed8ba6f029a99.js",
       "static/chunks/framework-37f3832b4337c515.js",
       "static/chunks/main-87d2a9c356c6eec3.js",
-      "static/css/7f17c0914d0ede50.css",
+      "static/css/7c8d644ce603f007.css",
       "static/chunks/pages/_app-7a70f784fd11da9a.js"
     ],
     "/_error": [
@@ -30,12 +30,6 @@
       "static/chunks/framework-37f3832b4337c515.js",
       "static/chunks/main-87d2a9c356c6eec3.js",
       "static/chunks/pages/_error-5366f00fee9a89ba.js"
-    ],
-    "/survey": [
-      "static/chunks/webpack-b66ed8ba6f029a99.js",
-      "static/chunks/framework-37f3832b4337c515.js",
-      "static/chunks/main-87d2a9c356c6eec3.js",
-      "static/chunks/pages/survey-3c2d56a93171924e.js"
     ]
   },
   "ampFirstPages": []
