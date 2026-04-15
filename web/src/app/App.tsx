@@ -53,6 +53,14 @@ export default function App() {
     const data = formDataRef.current;
 
     try {
+      // Guard: detect placeholder/missing Supabase credentials (set at build time by Vite)
+      const configuredUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+      if (!configuredUrl || configuredUrl === 'https://placeholder.supabase.co') {
+        throw new Error(
+          'Supabase is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your Vercel environment variables, then trigger a new deployment (Deployments → Redeploy).'
+        );
+      }
+
       // Helper: ensure multi-select values are stored as Postgres TEXT[]
       const toArray = (val: unknown): string[] | null => {
         if (Array.isArray(val)) return val;
