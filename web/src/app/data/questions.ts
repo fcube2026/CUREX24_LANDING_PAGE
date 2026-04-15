@@ -30,15 +30,6 @@ export const questions: Question[] = [
     placeholder: 'e.g. City General Hospital',
     optional: true,
   },
-  {
-    id: 'bio',
-    label: 'Share a brief professional bio with your patients. (Optional)',
-    type: 'textarea',
-    category: 'Professional',
-    placeholder: 'Tell patients about your expertise and care philosophy...',
-    optional: true,
-  },
-
   // Category 2: Services
   {
     id: 'homeVisits',
@@ -187,5 +178,13 @@ export const questions: Question[] = [
     type: 'binary',
     category: 'Platform',
     options: ['yes', 'no'],
+  },
+  {
+    id: 'bio',
+    label: 'Share a brief professional bio with your patients. (Optional)',
+    type: 'textarea',
+    category: 'Professional',
+    placeholder: 'Tell patients about your expertise and care philosophy...',
+    optional: true,
   },
 ];
