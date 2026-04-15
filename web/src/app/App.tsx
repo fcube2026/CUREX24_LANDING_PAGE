@@ -123,7 +123,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center p-4 sm:p-8">
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center p-3 sm:p-6">
       {/* Background Gradients */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]" />
@@ -131,13 +131,13 @@ export default function App() {
         <div className="absolute -bottom-[10%] left-[20%] w-[50%] h-[50%] bg-primary/3 rounded-full blur-[150px]" />
       </div>
 
-      <div className="w-full max-w-3xl relative z-10">
-        <div className="mb-10 px-4">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-bold text-primary/60">
+      <div className="w-full max-w-2xl relative z-10">
+        <div className="mb-3 px-2">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold text-primary/60">
               Question {currentIndex + 1} of {totalQuestions}
             </span>
-            <span className="text-sm font-bold text-muted-foreground mr-1">
+            <span className="text-xs font-bold text-muted-foreground mr-1">
               {Math.round(((currentIndex + 1) / totalQuestions) * 100)}% Complete
             </span>
           </div>
@@ -146,11 +146,11 @@ export default function App() {
         </div>
 
         <motion.div
-          className="bg-white/80 backdrop-blur-xl border border-white rounded-[3rem] shadow-2xl shadow-primary/5 p-8 sm:p-12 relative overflow-hidden"
+          className="bg-white/80 backdrop-blur-xl border border-white rounded-[2rem] shadow-2xl shadow-primary/5 p-4 sm:p-6 relative overflow-hidden"
           layout
         >
-          <div className="flex flex-col items-center mb-8">
-            <img src={logo} alt="Curex24" className="h-28 w-auto drop-shadow-sm" />
+          <div className="flex flex-col items-center mb-3">
+            <img src={logo} alt="Curex24" className="h-14 w-auto drop-shadow-sm" />
           </div>
 
           <AnimatePresence mode="wait">
