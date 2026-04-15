@@ -34,7 +34,7 @@ export default function AdminDashboardPage() {
       }
 
       try {
-        const { data, error: fetchError } = await supabase
+        const { data, error: fetchError } = await supabase!
           .from("doctor_onboarding_questionnaire")
           .select("id, created_at, specialization, experience, hospital, home_visits, online_consultations")
           .order("created_at", { ascending: false });
@@ -59,12 +59,19 @@ export default function AdminDashboardPage() {
     const homeVisitRate = total ? Math.round((homeVisitYes / total) * 100) : 0;
     const onlineRate = total ? Math.round((onlineYes / total) * 100) : 0;
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    const todayUtcYear = now.getUTCFullYear();
+    const todayUtcMonth = now.getUTCMonth();
+    const todayUtcDate = now.getUTCDate();
+
     const newToday = rows.filter((item) => {
       if (!item.created_at) return false;
       const created = new Date(item.created_at);
-      return created >= today;
+      return (
+        created.getUTCFullYear() === todayUtcYear &&
+        created.getUTCMonth() === todayUtcMonth &&
+        created.getUTCDate() === todayUtcDate
+      );
     }).length;
 
     return {
@@ -185,8 +192,11 @@ export default function AdminDashboardPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {rows.slice(0, 10).map((item, idx) => (
-                        <tr key={String(item.id || idx)} className="border-b border-slate-100 last:border-b-0">
+                      {rows.slice(0, 10).map((item) => (
+                        <tr
+                          key={String(item.id || `${item.created_at || "unknown"}-${item.specialization || "unknown"}`)}
+                          className="border-b border-slate-100 last:border-b-0"
+                        >
                           <td className="py-2 pr-3 text-slate-700">
                             {item.created_at ? new Date(item.created_at).toLocaleDateString() : "-"}
                           </td>
