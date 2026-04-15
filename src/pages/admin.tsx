@@ -1,3 +1,4 @@
+import type { Session } from "@supabase/supabase-js";
 import { useEffect, useMemo, useState } from "react";
 import { isSupabaseConfigured, supabase } from "../lib/supabase";
 
@@ -15,17 +16,134 @@ function normalizeYesNo(value: unknown) {
   return String(value || "").trim().toLowerCase();
 }
 
+function LoginForm({ onLogin }: { onLogin: () => void }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!supabase) {
+      setAuthError(
+        "Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY, then redeploy.",
+      );
+      return;
+    }
+
+    setSubmitting(true);
+    setAuthError("");
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      setAuthError(error.message);
+      setSubmitting(false);
+    } else {
+      onLogin();
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 w-full max-w-md">
+        <h1 className="text-2xl font-bold text-slate-900 mb-1">Admin Login</h1>
+        <p className="text-slate-500 text-sm mb-6">
+          Sign in to access the Curex24 analytics dashboard.
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+              placeholder="admin@curex24.com"
+              className="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+              placeholder="••••••••"
+              className="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {authError ? (
+            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2">
+              {authError}
+            </p>
+          ) : null}
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition"
+          >
+            {submitting ? "Signing in…" : "Sign in"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminDashboardPage() {
+  const [session, setSession] = useState<Session | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
   const [rows, setRows] = useState<QuestionnaireRow[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Restore and track auth session
   useEffect(() => {
+    if (!isSupabaseConfigured || !supabase) {
+      setAuthLoading(false);
+      return;
+    }
+
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setAuthLoading(false);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+    });
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+    setSession(null);
+    setRows([]);
+  };
+
+  // Fetch analytics data when session becomes available
+  useEffect(() => {
+    if (!session) return;
+
     const load = async () => {
       setLoading(true);
       setError("");
 
-      if (!isSupabaseConfigured) {
+      if (!isSupabaseConfigured || !supabase) {
         setError(
           "Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY, then redeploy.",
         );
@@ -34,7 +152,7 @@ export default function AdminDashboardPage() {
       }
 
       try {
-        const { data, error: fetchError } = await supabase!
+        const { data, error: fetchError } = await supabase
           .from("doctor_onboarding_questionnaire")
           .select("id, created_at, specialization, experience, hospital, home_visits, online_consultations")
           .order("created_at", { ascending: false });
@@ -50,7 +168,7 @@ export default function AdminDashboardPage() {
     };
 
     load();
-  }, []);
+  }, [session]);
 
   const summary = useMemo(() => {
     const total = rows.length;
@@ -98,12 +216,34 @@ export default function AdminDashboardPage() {
       .slice(0, 8);
   }, [rows]);
 
+  // While checking existing session
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <p className="text-slate-600">Checking authentication…</p>
+      </div>
+    );
+  }
+
+  // Show login form when not authenticated
+  if (!session) {
+    return <LoginForm onLogin={() => {}} />;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-6">
-        <header className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-          <h1 className="text-2xl font-bold text-slate-900">Admin Analytics Dashboard</h1>
-          <p className="text-slate-600 mt-1">Live onboarding insights from Supabase.</p>
+        <header className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900">Admin Analytics Dashboard</h1>
+            <p className="text-slate-600 mt-1">Live onboarding insights from Supabase.</p>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="text-sm text-slate-500 hover:text-red-600 border border-slate-200 hover:border-red-300 rounded-xl px-4 py-2 transition"
+          >
+            Sign out
+          </button>
         </header>
 
         {loading ? (
