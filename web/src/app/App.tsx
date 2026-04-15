@@ -53,6 +53,24 @@ export default function App() {
     const data = formDataRef.current;
 
     try {
+      // Guard: detect placeholder/missing Supabase credentials (set at build time by Vite)
+      const configuredUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+      const configuredKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+      if (
+        !configuredUrl ||
+        configuredUrl === 'https://placeholder.supabase.co' ||
+        configuredUrl.includes('your-project-id')
+      ) {
+        throw new Error(
+          'Supabase URL is not configured. Set VITE_SUPABASE_URL in Vercel environment variables and redeploy.'
+        );
+      }
+      if (!configuredKey || configuredKey === 'placeholder-anon-key' || configuredKey.includes('your-anon')) {
+        throw new Error(
+          'Supabase Anon Key is not configured. Set VITE_SUPABASE_ANON_KEY in Vercel environment variables and redeploy.'
+        );
+      }
+
       // Helper: ensure multi-select values are stored as Postgres TEXT[]
       const toArray = (val: unknown): string[] | null => {
         if (Array.isArray(val)) return val;
@@ -96,8 +114,25 @@ export default function App() {
       localStorage.removeItem(STORAGE_KEY);
     } catch (error: any) {
       console.error('Error submitting form:', error);
-      // Helpful debugging: show specific Supabase error details if available
-      alert(`Submission error: ${error.message || 'Unknown error'}`);
+
+      // "Failed to fetch" means the network request never reached Supabase.
+      // Show the partial URL and common causes.
+      const configuredUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+      const projectHint = configuredUrl
+        ? `(URL: ${configuredUrl.replace(/^https?:\/\//, '').split('.')[0]}…)`
+        : '(URL not set)';
+
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        alert(
+          `Network error – could not reach Supabase ${projectHint}.\n\n` +
+          `Possible causes:\n` +
+          `1. Supabase project is PAUSED – go to app.supabase.com, open your project, and click "Restore".\n` +
+          `2. Wrong URL in Vercel – verify VITE_SUPABASE_URL is exactly https://<id>.supabase.co (no trailing slash).\n` +
+          `3. Env var set for wrong environment – in Vercel, make sure the variables are enabled for Production, Preview, and Development.`
+        );
+      } else {
+        alert(`Submission error: ${error.message || 'Unknown error'}`);
+      }
     } finally {
       setIsSubmitting(false);
     }
