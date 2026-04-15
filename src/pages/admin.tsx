@@ -34,6 +34,12 @@ function LoginForm({ onLogin }: { onLogin: () => void }) {
     setSubmitting(true);
     setAuthError("");
 
+    if (email.trim().toLowerCase() !== "admin@curex24.com") {
+      setAuthError("Access denied. Only the admin account can log in here.");
+      setSubmitting(false);
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
@@ -114,11 +120,22 @@ export default function AdminDashboardPage() {
     }
 
     supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
+      const s = data.session;
+      if (s && s.user.email?.toLowerCase() !== "admin@curex24.com") {
+        supabase!.auth.signOut();
+        setAuthLoading(false);
+        return;
+      }
+      setSession(s);
       setAuthLoading(false);
     });
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      if (newSession && newSession.user.email?.toLowerCase() !== "admin@curex24.com") {
+        supabase!.auth.signOut();
+        setSession(null);
+        return;
+      }
       setSession(newSession);
     });
 
