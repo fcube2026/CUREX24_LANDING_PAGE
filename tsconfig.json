@@ -19,10 +19,14 @@
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "web",
+    "server",
+    "mobile",
+    "CUREX24_LANDING_PAGE"
   ]
 }
