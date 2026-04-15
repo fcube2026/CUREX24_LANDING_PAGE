@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { supabase } from "../lib/supabase";
+import { isSupabaseConfigured, supabase } from "../lib/supabase";
 
 type QuestionnaireRow = {
   id?: string | number;
@@ -24,6 +24,14 @@ export default function AdminDashboardPage() {
     const load = async () => {
       setLoading(true);
       setError("");
+
+      if (!isSupabaseConfigured) {
+        setError(
+          "Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY, then redeploy.",
+        );
+        setLoading(false);
+        return;
+      }
 
       try {
         const { data, error: fetchError } = await supabase
