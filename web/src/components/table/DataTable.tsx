@@ -1,16 +1,5 @@
 import { useMemo, useState } from 'react';
-
-interface DoctorResponse {
-  id?: string | number;
-  name?: string | null;
-  specialization?: string | null;
-  experience?: string | number | null;
-  home_visits?: string | null;
-  online_consultations?: string | null;
-  hospital?: string | null;
-  working_schedule?: string | null;
-  created_at?: string | null;
-}
+import { EXPERIENCE_NUMBER_REGEX, type DoctorResponse } from '../../types/doctorResponse';
 
 type SortKey = keyof DoctorResponse;
 
@@ -37,7 +26,7 @@ function normalizeExperience(value: DoctorResponse['experience']) {
   if (text === 'less-1') return 0;
   if (text === '10+' || text.includes('more')) return 10;
 
-  const match = text.match(/(\d+(?:\.\d+)?)/);
+  const match = text.match(EXPERIENCE_NUMBER_REGEX);
   return match ? Number(match[1]) : Number.NEGATIVE_INFINITY;
 }
 
@@ -161,7 +150,7 @@ export default function DataTable({ rows }: DataTableProps) {
 
           <tbody>
             {filteredAndSorted.map((row, index) => (
-              <tr key={row.id ?? `${row.created_at ?? 'row'}-${index}`} className="border-b border-gray-100">
+              <tr key={row.id ?? index} className="border-b border-gray-100">
                 <td className="py-3 pr-4">{row.name || '-'}</td>
                 <td className="py-3 pr-4">{row.specialization || '-'}</td>
                 <td className="py-3 pr-4">{String(row.experience ?? '-')}</td>

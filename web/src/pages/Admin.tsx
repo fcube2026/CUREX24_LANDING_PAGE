@@ -4,19 +4,7 @@ import DashboardLayout from '../components/DashboardLayout';
 import ChartCard from '../components/charts/ChartCard';
 import DataTable from '../components/table/DataTable';
 import { supabase } from '../lib/supabaseClient';
-
-interface DoctorResponse {
-  id?: string | number;
-  name?: string | null;
-  specialization?: string | null;
-  experience?: string | number | null;
-  home_visits?: string | null;
-  online_consultations?: string | null;
-  hospital?: string | null;
-  working_schedule?: string | null;
-  created_at?: string | null;
-  [key: string]: unknown;
-}
+import { EXPERIENCE_NUMBER_REGEX, type DoctorResponse } from '../types/doctorResponse';
 
 const COLORS = ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
 
@@ -37,7 +25,7 @@ function getExperienceBucket(value: DoctorResponse['experience']) {
   if (text === '5-10') return '5-10';
   if (text === '10+' || text.includes('more than')) return '10+';
 
-  const match = text.match(/(\d+(?:\.\d+)?)/);
+  const match = text.match(EXPERIENCE_NUMBER_REGEX);
   const firstNumber = match ? Number(match[1]) : Number.NaN;
   if (!Number.isFinite(firstNumber)) return 'Unknown';
   if (firstNumber < 5) return '0-5';
