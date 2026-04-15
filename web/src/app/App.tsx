@@ -39,7 +39,6 @@ export default function App() {
   // Vite env vars (must start with VITE_)
   const url = import.meta.env.VITE_FUNCTION_URL as string;
   const secret = import.meta.env.VITE_FORM_SHARED_SECRET as string;
-
   const handleNext = async () => {
     const activeIndex = currentIndexRef.current;
     
@@ -93,32 +92,14 @@ export default function App() {
         .insert([dbRow]);
 
       if (error) throw error;
-
-      /* 
-      // Legacy Edge Function submission logic
-      if (!url) throw new Error('Missing VITE_FUNCTION_URL');
-      if (!secret) throw new Error('Missing VITE_FORM_SHARED_SECRET');
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-form-secret': secret,
-        },
-        body: JSON.stringify(dbRow),
-      });
-
-      const text = await response.text();
-      if (!response.ok) throw new Error(text || 'Submission failed');
-      */
+      setIsComplete(true);
+      localStorage.removeItem(STORAGE_KEY);
     } catch (error: any) {
       console.error('Error submitting form:', error);
       // Helpful debugging: show specific Supabase error details if available
       alert(`Submission error: ${error.message || 'Unknown error'}`);
     } finally {
-      setIsComplete(true);
       setIsSubmitting(false);
-      localStorage.removeItem(STORAGE_KEY);
     }
   };
 

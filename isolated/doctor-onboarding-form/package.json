@@ -1,9 +1,0 @@
-{
-  "name": "doctor-onboarding-monorepo",
-  "private": true,
-  "scripts": {
-    "web": "pnpm -C web dev",
-    "server": "pnpm -C server start:dev",
-    "mobile": "pnpm -C mobile start"
-  }
-}

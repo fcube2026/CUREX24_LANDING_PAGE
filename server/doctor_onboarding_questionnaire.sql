@@ -3,6 +3,9 @@
 -- ⚠️  This script ONLY creates a new table. It does NOT modify or delete
 --     any existing schemas, tables, or data.
 
+-- Ensure gen_random_uuid() is available across environments.
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 CREATE TABLE IF NOT EXISTS doctor_onboarding_questionnaire (
   id            uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
   created_at    timestamptz DEFAULT timezone('utc'::text, now()) NOT NULL,
@@ -37,14 +40,35 @@ CREATE TABLE IF NOT EXISTS doctor_onboarding_questionnaire (
 -- Enable Row Level Security
 ALTER TABLE doctor_onboarding_questionnaire ENABLE ROW LEVEL SECURITY;
 
--- Allow anonymous inserts (no auth required for onboarding form)
-CREATE POLICY "Allow anonymous insert"
-  ON doctor_onboarding_questionnaire
-  FOR INSERT
-  WITH CHECK (true);
+-- Idempotent policy creation for safe re-runs across environments
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'doctor_onboarding_questionnaire'
+      AND policyname = 'Allow anonymous insert'
+  ) THEN
+    CREATE POLICY "Allow anonymous insert"
+      ON doctor_onboarding_questionnaire
+      FOR INSERT
+      WITH CHECK (true);
+  END IF;
+END $$;
 
--- Allow anonymous reads (adjust as needed for dashboards)
-CREATE POLICY "Allow anonymous read"
-  ON doctor_onboarding_questionnaire
-  FOR SELECT
-  USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'doctor_onboarding_questionnaire'
+      AND policyname = 'Allow anonymous read'
+  ) THEN
+    CREATE POLICY "Allow anonymous read"
+      ON doctor_onboarding_questionnaire
+      FOR SELECT
+      USING (true);
+  END IF;
+END $$;
