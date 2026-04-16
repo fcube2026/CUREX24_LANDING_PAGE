@@ -1,14 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import logo from '../../imports/icon-removebg-preview.png';
+
+const REDIRECT_DELAY = 8; // seconds before auto-redirect
 
 interface SuccessProps {
   onBackToHome: () => void;
 }
 
 export function Success({ onBackToHome }: SuccessProps) {
+  const [countdown, setCountdown] = useState(REDIRECT_DELAY);
+
   useEffect(() => {
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
@@ -32,6 +36,16 @@ export function Success({ onBackToHome }: SuccessProps) {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Auto-redirect countdown
+  useEffect(() => {
+    if (countdown <= 0) {
+      onBackToHome();
+      return;
+    }
+    const timer = setTimeout(() => setCountdown((c) => c - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [countdown, onBackToHome]);
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-4">
@@ -61,6 +75,10 @@ export function Success({ onBackToHome }: SuccessProps) {
             FORM SUBMITTED
           </h1>
           <p className="text-muted-foreground font-medium">Thank you for your response!</p>
+          <p className="text-xs text-muted-foreground">
+            Redirecting in{' '}
+            <span className="font-bold text-primary">{countdown}s</span>…
+          </p>
         </div>
 
         <button

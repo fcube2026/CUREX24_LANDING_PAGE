@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { QuestionRunner } from './components/QuestionRunner';
 import { Success } from './components/Success';
+import { Welcome } from './components/Welcome';
 import { ProgressBar } from './components/ProgressBar';
 import { questions } from './data/questions';
 
@@ -11,6 +12,7 @@ import { supabase } from '../lib/supabase';
 
 export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showWelcome, setShowWelcome] = useState(true);
 
   const [formData, setFormData] = useState<Record<string, any>>(() => {
     const savedData = localStorage.getItem(STORAGE_KEY);
@@ -146,6 +148,7 @@ export default function App() {
     setCurrentIndex(0);
     setFormData({});
     setIsComplete(false);
+    setShowWelcome(true);
     localStorage.removeItem(STORAGE_KEY);
   };
 
@@ -155,6 +158,10 @@ export default function App() {
 
   if (isComplete) {
     return <Success onBackToHome={handleBackToHome} />;
+  }
+
+  if (showWelcome) {
+    return <Welcome onStart={() => setShowWelcome(false)} />;
   }
 
   return (
