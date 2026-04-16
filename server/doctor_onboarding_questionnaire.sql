@@ -37,6 +37,11 @@ CREATE TABLE IF NOT EXISTS doctor_onboarding_questionnaire (
   guidelines_agreement   text                 -- binary yes/no
 );
 
+-- Grant schema and table access to the anon and authenticated roles
+-- (Required to fix "permission denied for schema public" errors)
+GRANT USAGE ON SCHEMA public TO anon, authenticated;
+GRANT INSERT, SELECT ON TABLE public.doctor_onboarding_questionnaire TO anon, authenticated;
+
 -- Enable Row Level Security
 ALTER TABLE doctor_onboarding_questionnaire ENABLE ROW LEVEL SECURITY;
 
