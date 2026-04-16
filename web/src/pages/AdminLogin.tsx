@@ -22,7 +22,14 @@ export default function AdminLogin() {
       return;
     }
 
-    navigate('/admin', { replace: true });
+    // Wait for the auth state to propagate before navigating, avoiding a
+    // race condition where ProtectedRoute may not yet see the new session.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_IN') {
+        subscription.unsubscribe();
+        navigate('/admin', { replace: true });
+      }
+    });
   };
 
   return (

@@ -41,7 +41,10 @@ export default function Admin() {
   const [error, setError] = useState('');
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    const { error: signOutError } = await supabase.auth.signOut();
+    if (signOutError) {
+      console.error('Sign out failed:', signOutError.message);
+    }
     navigate('/admin/login', { replace: true });
   };
 
