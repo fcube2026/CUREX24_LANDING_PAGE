@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import DashboardLayout from '../components/DashboardLayout';
 import ChartCard from '../components/charts/ChartCard';
@@ -34,9 +35,18 @@ function getExperienceBucket(value: DoctorResponse['experience']) {
 }
 
 export default function Admin() {
+  const navigate = useNavigate();
   const [responses, setResponses] = useState<DoctorResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const handleLogout = async () => {
+    const { error: signOutError } = await supabase.auth.signOut();
+    if (signOutError) {
+      console.error('Sign out failed:', signOutError.message);
+    }
+    navigate('/admin/login', { replace: true });
+  };
 
   useEffect(() => {
     const fetchResponses = async () => {
@@ -127,7 +137,7 @@ export default function Admin() {
   }, [responses]);
 
   return (
-    <DashboardLayout title="Admin Dashboard" subtitle="Doctor onboarding insights from Supabase responses.">
+    <DashboardLayout title="Admin Dashboard" subtitle="Doctor onboarding insights from Supabase responses." onLogout={handleLogout}>
       {loading ? (
         <div className="bg-white rounded-2xl border border-gray-100 p-6 text-gray-600">Loading dashboard data...</div>
       ) : null}
