@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Check, ArrowRight, ChevronRight, Home, Stethoscope, Users, Briefcase, ChevronLeft } from 'lucide-react';
+import { Check, ArrowRight, ChevronLeft } from 'lucide-react';
 import { Question } from '../data/questions';
 
 interface QuestionRunnerProps {
@@ -13,6 +14,27 @@ interface QuestionRunnerProps {
 
 export function QuestionRunner({ question, value, onChange, onNext, onBack, showBack }: QuestionRunnerProps) {
   const isMulti = question.type === 'multi-select';
+
+  // Keyboard Enter support
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Enter') return;
+      // Don't intercept Enter inside textarea (let it create a newline)
+      if (e.target instanceof HTMLTextAreaElement) return;
+      // For text/multi-select: Enter triggers Next if not disabled
+      if (isMulti || question.type === 'text') {
+        const isDisabled = !question.optional && (
+          isMulti
+            ? !value || value.length === 0
+            : !value || (typeof value === 'string' && value.trim() === '')
+        );
+        if (!isDisabled) onNext();
+      }
+      // For single-choice/binary, auto-advance already fires on click
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [question, value, onNext, isMulti]);
 
   const handleOptionClick = (optionValue: any) => {
     if (isMulti) {
