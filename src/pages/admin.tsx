@@ -46,6 +46,7 @@ function LoginForm({ onLogin }: { onLogin: () => void }) {
       setAuthError(error.message);
       setSubmitting(false);
     } else {
+      setSubmitting(false);
       onLogin();
     }
   };
@@ -244,7 +245,16 @@ export default function AdminDashboardPage() {
 
   // Show login form when not authenticated
   if (!session) {
-    return <LoginForm onLogin={() => {}} />;
+    return (
+      <LoginForm
+        onLogin={async () => {
+          if (supabase) {
+            const { data } = await supabase.auth.getSession();
+            setSession(data.session);
+          }
+        }}
+      />
+    );
   }
 
   return (
