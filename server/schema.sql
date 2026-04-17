@@ -26,6 +26,11 @@ CREATE TABLE IF NOT EXISTS questionnaire_responses (
   "guidelinesAgreement" text
 );
 
+-- Grant schema and table access to the anon and authenticated roles
+-- (Required to fix "permission denied for schema public" errors in newer Supabase projects)
+GRANT USAGE ON SCHEMA public TO anon, authenticated;
+GRANT INSERT, SELECT ON TABLE public.questionnaire_responses TO anon, authenticated;
+
 -- Enable RLS (Optional, but good practice)
 ALTER TABLE questionnaire_responses ENABLE ROW LEVEL SECURITY;
 
