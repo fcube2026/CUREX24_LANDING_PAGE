@@ -22,12 +22,12 @@ const Navbar = () => {
 
           <img
             src="/logo.png"
-            alt="CureX24"
+            alt="Curex24"
             className="h-11 w-auto transition-transform duration-300 group-hover:scale-105"
           />
 
           <span className="font-extrabold text-2xl tracking-tight gradient-text">
-            CureX24
+            Curex24
           </span>
 
         </a>
