@@ -83,7 +83,7 @@ const Hero = () => {
                 transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
                 className="text-center md:text-left"
               >
-                <div className="text-2xl md:text-3xl font-extrabold gradient-text">
+                <div className="text-2xl md:text-3xl font-extrabold text-emerald-700">
                   {s.value}
                 </div>
                 <div className="mt-1 text-xs md:text-sm text-gray-600 font-medium">

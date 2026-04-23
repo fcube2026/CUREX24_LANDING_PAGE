@@ -23,14 +23,18 @@ const Footer = () => {
           </p>
 
           <div className="mt-5 flex gap-3">
-            {["🌐", "📧", "💬"].map((emoji, i) => (
+            {[
+              { emoji: "🌐", label: "Visit our website" },
+              { emoji: "📧", label: "Email Curex24 support" },
+              { emoji: "💬", label: "Chat with Curex24" },
+            ].map((item) => (
               <a
-                key={i}
+                key={item.label}
                 href="#"
-                aria-label="Social link"
+                aria-label={item.label}
                 className="w-10 h-10 rounded-xl bg-white/70 border border-white/60 flex items-center justify-center hover:scale-110 hover:border-emerald-400 transition shadow-sm"
               >
-                <span aria-hidden>{emoji}</span>
+                <span aria-hidden>{item.emoji}</span>
               </a>
             ))}
           </div>
@@ -77,7 +81,11 @@ const Footer = () => {
             onSubmit={(e) => e.preventDefault()}
             className="mt-4 flex items-center gap-2 bg-white/80 border border-white/70 rounded-xl p-1.5 shadow-sm focus-within:border-emerald-400"
           >
+            <label htmlFor="footer-newsletter-email" className="sr-only">
+              Email address
+            </label>
             <input
+              id="footer-newsletter-email"
               type="email"
               required
               placeholder="you@email.com"
