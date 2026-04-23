@@ -1,5 +1,8 @@
 import ScrollProgressBar from "../components/ScrollProgressBar";
 import FloatingChatButton from "../components/FloatingChatButton";
+import AuroraBackground from "../components/AuroraBackground";
+import CursorGlow from "../components/CursorGlow";
+import LogoMarquee from "../components/LogoMarquee";
 
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
@@ -26,6 +29,8 @@ export default function Home() {
   return (
 
     <>
+      <AuroraBackground />
+      <CursorGlow />
       <ScrollProgressBar />
 
       <Navbar />
@@ -33,6 +38,8 @@ export default function Home() {
       <Hero />
 
       <TrustBadges />
+
+      <LogoMarquee />
 
       <WhatCurex24Does />
 
