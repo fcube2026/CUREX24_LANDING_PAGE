@@ -12,45 +12,44 @@ const Navbar = () => {
 
   return (
 
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 dark:bg-gray-900/80 dark:border-gray-700">
+    <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-white/40 shadow-[0_2px_20px_rgba(2,32,24,0.05)] dark:bg-gray-900/70 dark:border-white/10">
 
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
 
         {/* Logo */}
 
-        <div className="flex items-center gap-3">
+        <a href="#" className="flex items-center gap-3 group">
 
           <img
             src="/logo.png"
             alt="CureX24"
-            className="h-12 w-auto"
+            className="h-11 w-auto transition-transform duration-300 group-hover:scale-105"
           />
 
-          <span className="font-bold text-2xl text-gray-800 dark:text-white">
+          <span className="font-extrabold text-2xl tracking-tight gradient-text">
             CureX24
           </span>
 
-        </div>
+        </a>
 
         {/* Navigation Links */}
 
-        <div className="hidden md:flex gap-8 text-gray-600 dark:text-gray-300 font-medium">
+        <div className="hidden md:flex gap-8 text-gray-700 dark:text-gray-300 font-medium">
 
-          <a href="#about" className="hover:text-green-500 transition">
-            About
-          </a>
-
-          <a href="#services" className="hover:text-green-500 transition">
-            Services
-          </a>
-
-          <a href="#why" className="hover:text-green-500 transition">
-            Why Us
-          </a>
-
-          <a href="#testimonials" className="hover:text-green-500 transition">
-            Testimonials
-          </a>
+          {[
+            { href: "#about", label: "About" },
+            { href: "#services", label: "Services" },
+            { href: "#why", label: "Why Us" },
+            { href: "#testimonials", label: "Testimonials" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="relative py-1 transition hover:text-emerald-600 after:absolute after:left-0 after:-bottom-0.5 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-emerald-400 after:to-teal-500 after:transition-all hover:after:w-full"
+            >
+              {link.label}
+            </a>
+          ))}
 
         </div>
 

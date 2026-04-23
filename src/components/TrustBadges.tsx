@@ -41,7 +41,7 @@ const TrustBadges = () => {
       <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
 
         <motion.p
-          className="text-sm font-semibold tracking-widest uppercase text-green-600"
+          className="eyebrow"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -51,13 +51,13 @@ const TrustBadges = () => {
         </motion.p>
 
         <motion.h2
-          className="mt-3 text-3xl md:text-4xl font-bold text-gray-800"
+          className="mt-3 text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          Built on safety, privacy & verified care
+          Built on safety, privacy & <span className="gradient-text">verified care</span>
         </motion.h2>
 
         <motion.p
