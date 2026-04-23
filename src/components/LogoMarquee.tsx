@@ -7,16 +7,13 @@ import { motion } from "framer-motion";
  * Duplicates content for a seamless loop.
  */
 const items = [
-  "HIPAA-aligned",
   "End-to-End Encrypted",
   "24/7 Access",
   "Verified Clinicians",
   "AI-assisted Triage",
   "Home & Clinic Visits",
-  "Multi-language Care",
   "Secure Records",
   "Instant Booking",
-  "Trusted by Families",
 ];
 
 const Row = ({ reverse = false }: { reverse?: boolean }) => (
