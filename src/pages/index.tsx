@@ -3,7 +3,7 @@ import FloatingChatButton from "../components/FloatingChatButton";
 
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import Stats from "../components/Stats";
+import TrustBadges from "../components/TrustBadges";
 import WhatCurex24Does from "../components/WhatCurex24Does";
 import WhyChooseUs from "../components/WhyChooseUs";
 import AppPreviewCarousel from "../components/AppPreviewCarousel";
@@ -34,7 +34,7 @@ export default function Home() {
 
       <Hero />
 
-      <Stats />
+      <TrustBadges />
 
       <WhatCurex24Does />
 
