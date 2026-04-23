@@ -14,7 +14,6 @@ import Footer from "../components/Footer";
 
 /* NEW SECTIONS */
 
-import SmartCareRecommendation from "../components/SmartCareRecommendation";
 import ServicesSection from "../components/ServicesSection";
 import HomeClinicSection from "../components/HomeClinicSection";
 import HowItWorks from "../components/HowItWorks";
@@ -39,8 +38,6 @@ export default function Home() {
       <WhatCurex24Does />
 
       {/* NEW SECTIONS START */}
-
-      <SmartCareRecommendation icon="🧠" title="Smart Care Recommendation" />
 
       <ServicesSection />
 
