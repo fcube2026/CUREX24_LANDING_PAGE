@@ -46,7 +46,7 @@ const Hero = () => {
           >
             <span className="badge-pill">
               <span className="pulse-dot" aria-hidden></span>
-              Launching Soon · Join the Waitlist
+              Launching Soon · Join the Wishlist
             </span>
           </motion.div>
 
