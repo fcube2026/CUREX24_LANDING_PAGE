@@ -7,7 +7,6 @@ import TrustBadges from "../components/TrustBadges";
 import WhatCurex24Does from "../components/WhatCurex24Does";
 import WhyChooseUs from "../components/WhyChooseUs";
 import AppPreviewCarousel from "../components/AppPreviewCarousel";
-import Testimonials from "../components/Testimonials";
 import About from "../components/About";
 import CTA from "../components/CTA";
 import Footer from "../components/Footer";
@@ -58,8 +57,6 @@ export default function Home() {
       <WhyChooseUs />
 
       <AppPreviewCarousel />
-
-      <Testimonials />
 
       <About />
 
