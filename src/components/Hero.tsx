@@ -1,83 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import {
   motion,
-  AnimatePresence,
   useScroll,
   useTransform,
   useMotionValue,
   useSpring,
-  animate,
 } from "framer-motion";
 import WishlistButton from "./WishlistButton";
-
-/**
- * AnimatedCounter
- * Counts from 0 to `to` once it scrolls into view.
- * Supports a string suffix/prefix via `format`.
- */
-const AnimatedCounter = ({
-  to,
-  duration = 1.6,
-  format = (n: number) => n.toString(),
-}: {
-  to: number;
-  duration?: number;
-  format?: (n: number) => string;
-}) => {
-  const ref = useRef<HTMLSpanElement | null>(null);
-  const [display, setDisplay] = useState(format(0));
-  const started = useRef(false);
-  const controlsRef = useRef<ReturnType<typeof animate> | null>(null);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !started.current) {
-            started.current = true;
-            controlsRef.current = animate(0, to, {
-              duration,
-              ease: [0.16, 1, 0.3, 1],
-              onUpdate: (v) => setDisplay(format(Math.round(v))),
-            });
-          }
-        });
-      },
-      { threshold: 0.4 }
-    );
-    io.observe(node);
-    return () => {
-      io.disconnect();
-      controlsRef.current?.stop();
-    };
-  }, [to, duration, format]);
-
-  return <span ref={ref}>{display}</span>;
-};
-
-const ROTATING_WORDS = [
-  "reimagined",
-  "instant",
-  "personal",
-  "always-on",
-  "human-first",
-];
 
 const Hero = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 120]);
   const yReverse = useTransform(scrollY, [0, 500], [0, -60]);
-
-  // Rotating word
-  const [wordIdx, setWordIdx] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => {
-      setWordIdx((i) => (i + 1) % ROTATING_WORDS.length);
-    }, 2400);
-    return () => clearInterval(id);
-  }, []);
 
   // 3D tilt for the doctor card
   const tiltRef = useRef<HTMLDivElement | null>(null);
@@ -113,12 +47,6 @@ const Hero = () => {
     glareY.set(50);
   };
 
-  const stats = [
-    { to: 24, suffix: "/7", label: "Care Access" },
-    { to: 100, suffix: "%", label: "Verified Pros" },
-    { to: 10, prefix: "<", suffix: "m", label: "Response Time" },
-  ];
-
   return (
     <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
       {/* Floating Background Blobs */}
@@ -152,23 +80,10 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Heading with rotating word */}
+          {/* Heading */}
           <h1 className="mt-6 text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.05] tracking-tight">
-            Healthcare,
-            <br className="hidden sm:block" />
+            Healthcare,{" "}
             <span className="gradient-text inline-block align-baseline">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span
-                  key={ROTATING_WORDS[wordIdx]}
-                  initial={{ y: "0.6em", opacity: 0, filter: "blur(8px)" }}
-                  animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                  exit={{ y: "-0.6em", opacity: 0, filter: "blur(8px)" }}
-                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                  className="inline-block"
-                >
-                  {ROTATING_WORDS[wordIdx]}
-                </motion.span>
-              </AnimatePresence>{" "}
               for you.
             </span>
           </h1>
@@ -187,28 +102,6 @@ const Hero = () => {
               Learn more
               <span aria-hidden>→</span>
             </a>
-          </div>
-
-          {/* Stats row with animated counters */}
-          <div className="mt-12 grid grid-cols-3 gap-4 max-w-md mx-auto md:mx-0">
-            {stats.map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
-                className="text-center md:text-left"
-              >
-                <div className="text-2xl md:text-3xl font-extrabold text-emerald-700 tabular-nums">
-                  {s.prefix ?? ""}
-                  <AnimatedCounter to={s.to} />
-                  {s.suffix ?? ""}
-                </div>
-                <div className="mt-1 text-xs md:text-sm text-gray-600 font-medium">
-                  {s.label}
-                </div>
-              </motion.div>
-            ))}
           </div>
         </motion.div>
 
