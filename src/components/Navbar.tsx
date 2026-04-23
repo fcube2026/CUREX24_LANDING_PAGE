@@ -40,7 +40,6 @@ const Navbar = () => {
             { href: "#about", label: "About" },
             { href: "#services", label: "Services" },
             { href: "#why", label: "Why Us" },
-            { href: "#testimonials", label: "Testimonials" },
           ].map((link) => (
             <a
               key={link.href}
