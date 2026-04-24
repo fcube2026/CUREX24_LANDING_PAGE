@@ -35,41 +35,41 @@ export default function Home() {
 
       <Navbar />
 
-      <Hero />
+      <div className="snap-section"><Hero /></div>
 
-      <TrustBadges />
+      <div className="snap-section"><TrustBadges /></div>
 
-      <LogoMarquee />
+      <div className="snap-section"><LogoMarquee /></div>
 
-      <WhatCurex24Does />
+      <div className="snap-section"><WhatCurex24Does /></div>
 
       {/* NEW SECTIONS START */}
 
-      <ServicesSection />
+      <div className="snap-section"><ServicesSection /></div>
 
-      <HomeClinicSection />
+      <div className="snap-section"><HomeClinicSection /></div>
 
-      <HowItWorks />
+      <div className="snap-section"><HowItWorks /></div>
 
-      <CareOptions />
+      <div className="snap-section"><CareOptions /></div>
 
-      <PatientsProviders />
+      <div className="snap-section"><PatientsProviders /></div>
 
-      <PartnerSection />
+      <div className="snap-section"><PartnerSection /></div>
 
-      <FinalCTA />
+      <div className="snap-section"><FinalCTA /></div>
 
       {/* NEW SECTIONS END */}
 
-      <WhyChooseUs />
+      <div className="snap-section"><WhyChooseUs /></div>
 
-      <AppPreviewCarousel />
+      <div className="snap-section"><AppPreviewCarousel /></div>
 
-      <About />
+      <div className="snap-section"><About /></div>
 
-      <CTA />
+      <div className="snap-section"><CTA /></div>
 
-      <Footer />
+      <div className="snap-section"><Footer /></div>
 
       <FloatingChatButton />
 

@@ -1,4 +1,8 @@
+import { useState } from "react";
+import PartnerWishlistModal from "./PartnerWishlistModal";
+
 export default function PartnerSection() {
+  const [open, setOpen] = useState(false);
 
   return (
 
@@ -44,20 +48,24 @@ export default function PartnerSection() {
 
         {/* Button */}
 
-        <button className="bg-green-500 
-                           hover:bg-green-600 
-                           text-white 
-                           px-8 
-                           py-3 
-                           rounded-xl 
-                           shadow-md 
-                           transition">
+        <button
+          onClick={() => setOpen(true)}
+          className="bg-green-500 
+                     hover:bg-green-600 
+                     text-white 
+                     px-8 
+                     py-3 
+                     rounded-xl 
+                     shadow-md 
+                     transition">
 
           Become a Partner
 
         </button>
 
       </div>
+
+      {open && <PartnerWishlistModal close={() => setOpen(false)} />}
 
     </section>
 
