@@ -99,7 +99,7 @@ const Footer = () => {
             </button>
           </form>
           <p className="mt-3 text-xs text-gray-500">
-            <span className="font-medium">support@curex24.com</span>
+            <span className="font-medium">partnerships@curex24.com</span>
           </p>
         </div>
 
