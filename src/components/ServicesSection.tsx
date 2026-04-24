@@ -30,6 +30,11 @@ const services = [
     title: "Wellness Programs",
     icon: "🧘",
     description: "Holistic health programs"
+  },
+  {
+    title: "Video Consultation",
+    icon: "🎥",
+    description: "Face-to-face consults via secure video calls"
   }
 ];
 

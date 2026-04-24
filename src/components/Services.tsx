@@ -36,6 +36,12 @@ const services = [
     icon: "🧘",
     title: "Wellness Programs",
     desc: "Holistic health programs focusing on mental and physical wellbeing."
+  },
+
+  {
+    icon: "🎥",
+    title: "Video Consultation",
+    desc: "Consult with doctors face-to-face from anywhere via secure video calls."
   }
 
 ];
