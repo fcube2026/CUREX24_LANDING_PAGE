@@ -40,11 +40,99 @@ const HeroAnimation = () => {
       {/* Ambient glow */}
       <div className="absolute -inset-8 rounded-[3rem] bg-gradient-to-tr from-emerald-300/40 via-teal-300/30 to-green-200/30 blur-3xl pointer-events-none" />
 
+      {/* ── Doctor image with floating ring ──────────────── */}
+      <div className="relative flex justify-center mb-6">
+        {/* Outer pulse ring */}
+        <motion.div
+          animate={{ scale: [1, 1.08, 1], opacity: [0.35, 0.15, 0.35] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-0 rounded-full bg-emerald-300/40 blur-xl"
+        />
+        {/* Inner glow ring */}
+        <motion.div
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+          className="absolute inset-2 rounded-full border-2 border-emerald-400/50"
+        />
+        {/* Doctor photo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="relative w-52 h-52 rounded-full overflow-hidden border-4 border-white/80 shadow-2xl ring-4 ring-emerald-200/60"
+        >
+          <img
+            src="/doctor.png"
+            alt="Doctor"
+            className="w-full h-full object-cover object-top"
+          />
+        </motion.div>
+
+        {/* ── Orbiting pill — Heart Rate ────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, x: 40, y: -20 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+          className="absolute -right-4 top-4 flex glass-card items-center gap-2 px-3 py-2 float-y shadow-lg"
+          style={{ animationDelay: "-1s" }}
+        >
+          <div className="w-7 h-7 rounded-lg bg-emerald-900 flex items-center justify-center">
+            <svg viewBox="0 0 80 48" className="w-5 h-4">
+              <motion.path
+                d={ECG_PATH}
+                fill="none"
+                stroke="#34D399"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: [0, 1, 1, 0] }}
+                transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 0.6, ease: "easeInOut", times: [0, 0.5, 0.7, 1] }}
+              />
+            </svg>
+          </div>
+          <div>
+            <div className="text-[9px] text-gray-500 leading-none">Heart Rate</div>
+            <div className="text-xs font-extrabold text-gray-800 mt-0.5">72 <span className="font-normal text-emerald-600">bpm</span></div>
+          </div>
+        </motion.div>
+
+        {/* ── Orbiting pill — Rating ────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, x: -40, y: -20 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+          className="absolute -left-6 top-8 flex glass-card items-center gap-2 px-3 py-2 float-y shadow-lg"
+          style={{ animationDelay: "-3s" }}
+        >
+          <div className="w-7 h-7 rounded-lg bg-yellow-100 text-yellow-500 flex items-center justify-center text-sm">⭐</div>
+          <div>
+            <div className="text-[9px] text-gray-500 leading-none">Rating</div>
+            <div className="text-xs font-extrabold text-gray-800 mt-0.5">4.9 / 5</div>
+          </div>
+        </motion.div>
+
+        {/* ── Orbiting pill — Patients ──────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.0, duration: 0.6 }}
+          className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex glass-card items-center gap-2 px-3 py-2 float-y shadow-lg"
+          style={{ animationDelay: "-5s" }}
+        >
+          <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-500 flex items-center justify-center text-sm">👥</div>
+          <div>
+            <div className="text-[9px] text-gray-500 leading-none">Patients</div>
+            <div className="text-xs font-extrabold text-gray-800 mt-0.5"><Counter to={240} suffix="+" /></div>
+          </div>
+        </motion.div>
+      </div>
+
       {/* ── Dashboard card ────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
         className="glass-card rounded-3xl overflow-hidden shadow-2xl"
       >
         {/* Top bar */}
@@ -63,95 +151,6 @@ const HeroAnimation = () => {
 
         {/* Body */}
         <div className="p-5 space-y-4">
-          {/* Welcome row */}
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-[11px] text-gray-500 font-medium">Good morning,</p>
-              <p className="text-sm font-bold text-gray-800">Your Health Hub 👋</p>
-            </div>
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white text-base shadow-lg">
-              ✦
-            </div>
-          </div>
-
-          {/* ECG strip */}
-          <motion.div
-            className="rounded-2xl bg-emerald-900/90 px-4 py-3 flex items-center gap-3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <div>
-              <p className="text-[10px] text-emerald-300 font-semibold uppercase tracking-widest">
-                Heart Rate
-              </p>
-              <p className="text-2xl font-extrabold text-white leading-none mt-0.5">
-                72 <span className="text-sm font-normal text-emerald-300">bpm</span>
-              </p>
-            </div>
-            <div className="flex-1 overflow-hidden">
-              <motion.svg
-                viewBox="0 0 80 48"
-                className="w-full h-10"
-                preserveAspectRatio="none"
-              >
-                {/* Static dim copy */}
-                <path
-                  d={ECG_PATH}
-                  fill="none"
-                  stroke="rgba(52,211,153,0.25)"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                {/* Animated travelling stroke */}
-                <motion.path
-                  d={ECG_PATH}
-                  fill="none"
-                  stroke="#34D399"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  initial={{ pathLength: 0, opacity: 1 }}
-                  animate={{ pathLength: [0, 1, 1, 0] }}
-                  transition={{
-                    duration: 2.4,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                    repeatDelay: 0.4,
-                    times: [0, 0.5, 0.7, 1],
-                  }}
-                />
-                {/* Moving dot */}
-                <motion.circle
-                  r="3"
-                  fill="#A7F3D0"
-                  filter="url(#glow)"
-                  initial={{ offsetDistance: "0%" } as any}
-                  animate={{ offsetDistance: "100%" } as any}
-                  style={{
-                    offsetPath: `path("${ECG_PATH}")`,
-                  } as any}
-                  transition={{
-                    duration: 2.4,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                    repeatDelay: 0.4,
-                  }}
-                />
-                <defs>
-                  <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
-                    <feGaussianBlur stdDeviation="2" result="blur" />
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
-              </motion.svg>
-            </div>
-          </motion.div>
-
           {/* Stat tiles row */}
           <div className="grid grid-cols-3 gap-2">
             {[
@@ -183,8 +182,12 @@ const HeroAnimation = () => {
             className="flex items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-50/80 to-teal-50/60 border border-emerald-100 px-4 py-3"
           >
             <div className="relative">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-xl">
-                👨‍⚕️
+              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-300 shadow">
+                <img
+                  src="/doctor.png"
+                  alt="Dr. Patel"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-400 rounded-full border-2 border-white" />
             </div>
@@ -211,8 +214,8 @@ const HeroAnimation = () => {
       <motion.div
         initial={{ opacity: 0, x: 30, y: -10 }}
         animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ delay: 1, duration: 0.6 }}
-        className="absolute -right-6 top-6 hidden sm:flex glass-card items-center gap-2.5 px-4 py-2.5 float-y shadow-xl"
+        transition={{ delay: 1.2, duration: 0.6 }}
+        className="absolute -right-6 bottom-16 hidden sm:flex glass-card items-center gap-2.5 px-4 py-2.5 float-y shadow-xl"
         style={{ animationDelay: "-2s" }}
       >
         <div className="w-8 h-8 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center text-base">
@@ -228,7 +231,7 @@ const HeroAnimation = () => {
       <motion.div
         initial={{ opacity: 0, x: -30, y: 10 }}
         animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
+        transition={{ delay: 1.4, duration: 0.6 }}
         className="absolute -left-6 bottom-8 hidden sm:flex glass-card items-center gap-2.5 px-4 py-2.5 float-y shadow-xl"
         style={{ animationDelay: "-4s" }}
       >
