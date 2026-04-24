@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import WhyAnimation from "./WhyAnimation";
 
 const WhyChooseUs = () => {
 
@@ -21,16 +22,8 @@ const WhyChooseUs = () => {
         transition={{ duration: 0.8 }}
       >
 
-        <div className="relative">
-          <div
-            aria-hidden
-            className="absolute -inset-6 rounded-[2rem] bg-gradient-to-tr from-emerald-300/40 via-teal-300/30 to-green-200/30 blur-2xl"
-          />
-          <img
-            src="/app-preview.png"
-            alt="App Preview"
-            className="relative rounded-3xl shadow-2xl border border-white/60"
-          />
+        <div className="relative flex items-center justify-center py-8">
+          <WhyAnimation />
         </div>
 
         <div>
