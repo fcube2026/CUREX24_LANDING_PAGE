@@ -27,17 +27,27 @@ const Hero = () => {
       `radial-gradient(420px circle at ${x}% ${y}%, rgba(255,255,255,0.55), transparent 45%)`
   );
 
-  const onTiltMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const applyTilt = (clientX: number, clientY: number) => {
     const el = tiltRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width; // 0..1
-    const py = (e.clientY - rect.top) / rect.height; // 0..1
+    const px = (clientX - rect.left) / rect.width; // 0..1
+    const py = (clientY - rect.top) / rect.height; // 0..1
     const max = 9; // max tilt degrees
     ry.set((px - 0.5) * 2 * max);
     rx.set(-(py - 0.5) * 2 * max);
     glareX.set(px * 100);
     glareY.set(py * 100);
+  };
+
+  const onTiltMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    applyTilt(e.clientX, e.clientY);
+  };
+
+  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    if (!touch) return;
+    applyTilt(touch.clientX, touch.clientY);
   };
 
   const onTiltLeave = () => {
@@ -127,6 +137,8 @@ const Hero = () => {
               ref={tiltRef}
               onMouseMove={onTiltMove}
               onMouseLeave={onTiltLeave}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTiltLeave}
               style={{
                 y,
                 rotateX: sx,

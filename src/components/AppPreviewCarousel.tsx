@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const images = [
   "/app-preview.png",
@@ -10,6 +10,7 @@ const images = [
 const AppPreviewCarousel = () => {
 
   const [index, setIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
 
   /* Auto Slide */
 
@@ -26,6 +27,21 @@ const AppPreviewCarousel = () => {
     return () => clearInterval(interval);
 
   }, []);
+
+  const goNext = () => setIndex((prev) => (prev + 1) % images.length);
+  const goPrev = () => setIndex((prev) => (prev - 1 + images.length) % images.length);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (delta > 50) goPrev();
+    else if (delta < -50) goNext();
+    touchStartX.current = null;
+  };
 
   return (
 
@@ -50,7 +66,11 @@ const AppPreviewCarousel = () => {
 
         <div className="flex justify-center mt-16">
 
-          <div className="relative w-[260px] h-[520px] rounded-[40px] border-[10px] border-gray-800 shadow-2xl overflow-hidden bg-black">
+          <div
+            className="relative w-[260px] h-[520px] rounded-[40px] border-[10px] border-gray-800 shadow-2xl overflow-hidden bg-black select-none touch-pan-y cursor-grab active:cursor-grabbing"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
 
             <motion.img
               key={index}
@@ -59,7 +79,7 @@ const AppPreviewCarousel = () => {
 
               alt="App Preview"
 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover pointer-events-none"
 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -69,6 +89,23 @@ const AppPreviewCarousel = () => {
 
           </div>
 
+        </div>
+
+        {/* Dot indicators */}
+
+        <div className="flex justify-center gap-2 mt-6" aria-label="Slide indicators">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                i === index
+                  ? "bg-emerald-500 w-6"
+                  : "bg-emerald-200"
+              }`}
+            />
+          ))}
         </div>
 
       </div>
