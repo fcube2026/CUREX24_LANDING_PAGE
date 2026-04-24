@@ -108,7 +108,7 @@ const PartnerWishlistModal = ({ close }: PartnerWishlistModalProps) => {
                   checked={consent}
                   onChange={() => setConsent(!consent)}
                 />
-                I agree to be contacted by Curex24 regarding the partner programme.
+                I agree to be contacted by Curex24 regarding the partner program.
               </label>
 
               <button type="submit" className="btn-primary w-full">
