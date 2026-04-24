@@ -4,7 +4,6 @@ import {
   useTransform,
 } from "framer-motion";
 import WishlistButton from "./WishlistButton";
-import HeroAnimation from "./HeroAnimation";
 
 const Hero = () => {
   const { scrollY } = useScroll();
@@ -69,7 +68,7 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        {/* RIGHT — Curex24 animated dashboard */}
+        {/* RIGHT — Doctors image */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
@@ -77,7 +76,11 @@ const Hero = () => {
           className="flex justify-center md:justify-end"
         >
           <motion.div style={{ y }}>
-            <HeroAnimation />
+            <img
+              src="/doctor.png"
+              alt="Trusted doctors and caregivers"
+              className="w-full max-w-md rounded-3xl shadow-2xl object-cover"
+            />
           </motion.div>
         </motion.div>
       </div>
