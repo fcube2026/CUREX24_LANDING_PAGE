@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 type Props = {
   icon: string;
   title: string;
@@ -12,17 +14,18 @@ export default function FeatureCard({
 
   return (
 
-    <div className="
-      bg-white
-      p-6
-      rounded-2xl
-      shadow-md
-      hover:shadow-xl
-      hover:-translate-y-1
-      transition-all
-      duration-300
-      text-center
-    ">
+    <motion.div
+      className="
+        bg-white
+        p-6
+        rounded-2xl
+        shadow-md
+        text-center
+      "
+      whileHover={{ y: -4, boxShadow: "0 20px 40px rgba(16,185,129,0.15)" }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
 
       <div className="text-4xl mb-3">
         {icon}
@@ -40,7 +43,7 @@ export default function FeatureCard({
 
       )}
 
-    </div>
+    </motion.div>
 
   );
 

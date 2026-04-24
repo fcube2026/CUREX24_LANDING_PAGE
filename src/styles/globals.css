@@ -576,3 +576,65 @@ body > .aurora-fixed {
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
+
+/* ==========================================================
+   TOUCH & INTERACTION IMPROVEMENTS
+   ========================================================== */
+
+/* Eliminate 300ms tap delay and prevent accidental zoom on double-tap */
+a,
+button,
+[role="button"],
+input,
+textarea,
+select,
+label,
+.btn-primary,
+.btn-secondary,
+.glass-card {
+  touch-action: manipulation;
+}
+
+/* Ensure adequate touch target size for small interactive elements */
+button,
+[role="button"],
+a {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Exception: inline text links inside paragraphs should not be stretched */
+p a,
+.text-link {
+  min-height: unset;
+  min-width: unset;
+}
+
+/* Active / pressed state for glass cards on touch */
+.glass-card:active {
+  transform: scale(0.98);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.6) inset,
+    0 6px 18px rgba(2, 32, 24, 0.10);
+}
+
+/* Active state for primary button */
+.btn-primary:active {
+  transform: scale(0.97) translateY(1px);
+  box-shadow:
+    0 6px 16px rgba(16,185,129,0.30),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+/* Active state for secondary button */
+.btn-secondary:active {
+  transform: scale(0.97) translateY(1px);
+  background: rgba(255,255,255,0.90);
+}
+
+/* Dark mode active states */
+.dark .glass-card:active {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.04) inset,
+    0 6px 18px rgba(0,0,0,0.50);
+}

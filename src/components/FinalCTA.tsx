@@ -52,6 +52,7 @@ const FinalCTA = () => {
               className="glass-card px-6 py-3 font-medium"
 
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               Download App
             </motion.button>

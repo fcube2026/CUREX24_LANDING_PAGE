@@ -1,9 +1,16 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+
+const NAV_LINKS = [
+  { href: "#about", label: "About" },
+  { href: "#services", label: "Services" },
+  { href: "#why", label: "Why Us" },
+];
 
 const Navbar = () => {
 
   const [darkMode, setDarkMode] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleDark = () => {
     setDarkMode(!darkMode);
@@ -32,15 +39,11 @@ const Navbar = () => {
 
         </a>
 
-        {/* Navigation Links */}
+        {/* Desktop Navigation Links */}
 
         <div className="hidden md:flex gap-8 text-gray-700 dark:text-gray-300 font-medium">
 
-          {[
-            { href: "#about", label: "About" },
-            { href: "#services", label: "Services" },
-            { href: "#why", label: "Why Us" },
-          ].map((link) => (
+          {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -54,7 +57,7 @@ const Navbar = () => {
 
         {/* Right Side */}
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
 
           {/* Dark Mode Toggle */}
 
@@ -62,14 +65,69 @@ const Navbar = () => {
             onClick={toggleDark}
             className="glass-card px-4 py-2"
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.92 }}
+            aria-label="Toggle dark mode"
           >
             🌙
+          </motion.button>
+
+          {/* Hamburger button (mobile only) */}
+
+          <motion.button
+            className="md:hidden glass-card flex flex-col gap-[5px] items-center justify-center w-10 h-10 p-2"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            whileTap={{ scale: 0.92 }}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            <span
+              className={`block w-5 h-[2px] bg-emerald-700 dark:bg-emerald-400 rounded-full transition-all duration-300 origin-center ${
+                menuOpen ? "rotate-45 translate-y-[7px]" : ""
+              }`}
+            />
+            <span
+              className={`block w-5 h-[2px] bg-emerald-700 dark:bg-emerald-400 rounded-full transition-all duration-300 ${
+                menuOpen ? "opacity-0 scale-x-0" : ""
+              }`}
+            />
+            <span
+              className={`block w-5 h-[2px] bg-emerald-700 dark:bg-emerald-400 rounded-full transition-all duration-300 origin-center ${
+                menuOpen ? "-rotate-45 -translate-y-[7px]" : ""
+              }`}
+            />
           </motion.button>
 
         </div>
 
       </div>
+
+      {/* Mobile Menu */}
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden border-t border-white/30 dark:border-white/10"
+          >
+            <div className="flex flex-col px-4 py-3 gap-1">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3 px-4 rounded-xl text-gray-700 dark:text-gray-300 font-medium text-base hover:bg-emerald-50 hover:text-emerald-700 dark:hover:bg-emerald-900/30 active:bg-emerald-100 dark:active:bg-emerald-900/50 transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </nav>
 
