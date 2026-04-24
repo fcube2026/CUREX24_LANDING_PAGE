@@ -21,7 +21,6 @@ export default function FeatureCard({
         rounded-2xl
         shadow-md
         text-center
-        cursor-pointer
       "
       whileHover={{ y: -4, boxShadow: "0 20px 40px rgba(16,185,129,0.15)" }}
       whileTap={{ scale: 0.96 }}

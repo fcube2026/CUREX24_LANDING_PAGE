@@ -43,6 +43,11 @@ const AppPreviewCarousel = () => {
     touchStartX.current = null;
   };
 
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") goPrev();
+    else if (e.key === "ArrowRight") goNext();
+  };
+
   return (
 
     <section className="py-24">
@@ -68,8 +73,12 @@ const AppPreviewCarousel = () => {
 
           <div
             className="relative w-[260px] h-[520px] rounded-[40px] border-[10px] border-gray-800 shadow-2xl overflow-hidden bg-black select-none touch-pan-y cursor-grab active:cursor-grabbing"
+            role="group"
+            aria-label="App preview carousel"
+            tabIndex={0}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
+            onKeyDown={onKeyDown}
           >
 
             <motion.img
@@ -93,16 +102,18 @@ const AppPreviewCarousel = () => {
 
         {/* Dot indicators */}
 
-        <div className="flex justify-center gap-2 mt-6" aria-label="Slide indicators">
+        <div role="tablist" className="flex justify-center gap-2 mt-6" aria-label="Slide indicators">
           {images.map((_, i) => (
             <button
               key={i}
+              role="tab"
               onClick={() => setIndex(i)}
               aria-label={`Go to slide ${i + 1}`}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              aria-current={i === index ? "true" : undefined}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
                 i === index
                   ? "bg-emerald-500 w-6"
-                  : "bg-emerald-200"
+                  : "bg-emerald-200 w-2.5"
               }`}
             />
           ))}
