@@ -1,61 +1,15 @@
-import { useRef } from "react";
 import {
   motion,
   useScroll,
   useTransform,
-  useMotionValue,
-  useSpring,
 } from "framer-motion";
 import WishlistButton from "./WishlistButton";
+import HeroAnimation from "./HeroAnimation";
 
 const Hero = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 120]);
   const yReverse = useTransform(scrollY, [0, 500], [0, -60]);
-
-  // 3D tilt for the doctor card
-  const tiltRef = useRef<HTMLDivElement | null>(null);
-  const rx = useMotionValue(0);
-  const ry = useMotionValue(0);
-  const sx = useSpring(rx, { stiffness: 120, damping: 14, mass: 0.4 });
-  const sy = useSpring(ry, { stiffness: 120, damping: 14, mass: 0.4 });
-  const glareX = useMotionValue(50);
-  const glareY = useMotionValue(50);
-  const glareBg = useTransform(
-    [glareX, glareY],
-    ([x, y]) =>
-      `radial-gradient(420px circle at ${x}% ${y}%, rgba(255,255,255,0.55), transparent 45%)`
-  );
-
-  const applyTilt = (clientX: number, clientY: number) => {
-    const el = tiltRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const px = (clientX - rect.left) / rect.width; // 0..1
-    const py = (clientY - rect.top) / rect.height; // 0..1
-    const max = 9; // max tilt degrees
-    ry.set((px - 0.5) * 2 * max);
-    rx.set(-(py - 0.5) * 2 * max);
-    glareX.set(px * 100);
-    glareY.set(py * 100);
-  };
-
-  const onTiltMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    applyTilt(e.clientX, e.clientY);
-  };
-
-  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    const touch = e.touches[0];
-    if (!touch) return;
-    applyTilt(touch.clientX, touch.clientY);
-  };
-
-  const onTiltLeave = () => {
-    rx.set(0);
-    ry.set(0);
-    glareX.set(50);
-    glareY.set(50);
-  };
 
   return (
     <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
@@ -115,90 +69,16 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        {/* RIGHT IMAGE with 3D tilt */}
+        {/* RIGHT — Curex24 animated dashboard */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           className="flex justify-center md:justify-end"
         >
-          <div
-            className="relative"
-            style={{ perspective: 1100 }}
-          >
-            {/* Soft glow ring behind image */}
-            <div
-              aria-hidden
-              className="absolute -inset-6 rounded-[2rem] bg-gradient-to-tr from-emerald-300/50 via-teal-300/40 to-green-200/40 blur-2xl"
-            />
-
-            {/* Tiltable image frame */}
-            <motion.div
-              ref={tiltRef}
-              onMouseMove={onTiltMove}
-              onMouseLeave={onTiltLeave}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTiltLeave}
-              style={{
-                y,
-                rotateX: sx,
-                rotateY: sy,
-                transformStyle: "preserve-3d",
-              }}
-              className="relative glass-card p-3 rounded-3xl tilt-card"
-            >
-              <img
-                src="/doctor.png"
-                alt="Doctor"
-                className="rounded-2xl w-full max-w-md md:max-w-lg block"
-                style={{ transform: "translateZ(40px)" }}
-              />
-
-              {/* Animated glare layer */}
-              <motion.span
-                className="tilt-glare"
-                style={{ background: glareBg }}
-                aria-hidden
-              />
-
-              {/* Floating mini-cards (lifted in 3D) */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                style={{ transform: "translateZ(80px)" }}
-                className="hidden sm:flex absolute -left-6 top-8 glass-card px-4 py-3 items-center gap-3 float-y"
-              >
-                <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg">
-                  ❤️
-                </div>
-                <div>
-                  <div className="text-xs text-gray-500">Heart rate</div>
-                  <div className="text-sm font-semibold text-gray-800">
-                    72 bpm · Normal
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-                style={{ transform: "translateZ(80px)", animationDelay: "-3s" }}
-                className="hidden sm:flex absolute -right-6 bottom-10 glass-card px-4 py-3 items-center gap-3 float-y"
-              >
-                <div className="w-9 h-9 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center text-lg">
-                  ✅
-                </div>
-                <div>
-                  <div className="text-xs text-gray-500">Verified</div>
-                  <div className="text-sm font-semibold text-gray-800">
-                    Dr. available now
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
+          <motion.div style={{ y }}>
+            <HeroAnimation />
+          </motion.div>
         </motion.div>
       </div>
     </section>
