@@ -65,7 +65,7 @@ export default function Home() {
 
       <div className="snap-section"><About /></div>
 
-      <div className="snap-section"><CTA /></div>
+      <CTA />
 
       <Footer />
 

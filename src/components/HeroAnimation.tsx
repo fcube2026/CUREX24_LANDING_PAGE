@@ -1,37 +1,4 @@
-import { motion, useAnimationFrame } from "framer-motion";
-import { useRef, useState } from "react";
-
-/* ── ECG path helper ─────────────────────────────────────── */
-const ECG_PATH =
-  "M0,24 L10,24 L14,10 L18,38 L22,4 L26,44 L30,24 L40,24 L44,24 L48,14 L52,34 L56,24 L80,24";
-
-/* ── Tiny animated counter ───────────────────────────────── */
-function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
-  const [val, setVal] = useState(0);
-  const started = useRef(false);
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useAnimationFrame(() => {
-    if (!ref.current) return;
-    if (!started.current) {
-      const rect = ref.current.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.95) started.current = true;
-    }
-    if (started.current) {
-      setVal((prev) => {
-        if (prev >= to) return to;
-        return Math.min(prev + Math.ceil((to - prev) / 18), to);
-      });
-    }
-  });
-
-  return (
-    <span ref={ref}>
-      {val}
-      {suffix}
-    </span>
-  );
-}
+import { motion } from "framer-motion";
 
 /* ── Main component ──────────────────────────────────────── */
 const HeroAnimation = () => {
@@ -84,10 +51,6 @@ const HeroAnimation = () => {
             <div className="flex-1 min-w-0">
               <p className="text-sm font-extrabold text-gray-800 truncate">Dr. Patel</p>
               <p className="text-[11px] text-emerald-600 font-semibold">General Physician</p>
-              <div className="flex items-center gap-1 mt-1">
-                <span className="text-yellow-400 text-[11px] leading-none">★★★★★</span>
-                <span className="text-[10px] text-gray-500">4.9 · 240+ patients</span>
-              </div>
             </div>
 
             {/* Book button */}
@@ -121,62 +84,6 @@ const HeroAnimation = () => {
           </div>
         </div>
 
-        {/* ── Stat tiles ────────────────────────────────────── */}
-        <div className="grid grid-cols-3 gap-2.5 p-4 bg-white/10">
-          {[
-            { icon: "🩺", label: "Doctors", value: 240, suffix: "+" },
-            { icon: "📅", label: "Bookings", value: 98, suffix: "%" },
-            { icon: "⚡", label: "Avg Wait", value: 4, suffix: "m" },
-          ].map(({ icon, label, value, suffix }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 + i * 0.12 }}
-              className="rounded-2xl bg-white/75 border border-white/60 p-3 text-center"
-            >
-              <div className="text-xl leading-none">{icon}</div>
-              <div className="text-sm font-extrabold text-gray-800 mt-1.5">
-                <Counter to={value} suffix={suffix} />
-              </div>
-              <div className="text-[9px] text-gray-500 mt-0.5">{label}</div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* ── Heart-rate bar ────────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.85 }}
-          className="mx-4 mb-4 flex items-center gap-3 rounded-2xl bg-emerald-900/90 px-4 py-3"
-        >
-          <div className="w-9 h-9 rounded-xl bg-emerald-700/80 flex items-center justify-center flex-shrink-0">
-            <svg viewBox="0 0 80 48" className="w-5 h-4">
-              <motion.path
-                d={ECG_PATH}
-                fill="none"
-                stroke="#34D399"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: [0, 1, 1, 0] }}
-                transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 0.6, ease: "easeInOut", times: [0, 0.5, 0.7, 1] }}
-              />
-            </svg>
-          </div>
-          <div className="flex-1">
-            <div className="text-[10px] text-emerald-400 font-medium leading-none">Heart Rate</div>
-            <div className="text-sm font-extrabold text-white mt-0.5">
-              72 <span className="text-[11px] font-normal text-emerald-400">bpm</span>
-            </div>
-          </div>
-          <div className="text-right">
-            <div className="text-[9px] text-emerald-400 leading-none">Status</div>
-            <div className="text-xs font-bold text-emerald-300 mt-0.5">Normal ✓</div>
-          </div>
-        </motion.div>
       </motion.div>
 
       {/* ── Floating badge — Verified Doctor ─────────────── */}
