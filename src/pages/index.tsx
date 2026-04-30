@@ -67,7 +67,7 @@ export default function Home() {
 
       <div className="snap-section"><CTA /></div>
 
-      <Footer />
+      <div className="snap-section-end"><Footer /></div>
 
       <FloatingChatButton />
 

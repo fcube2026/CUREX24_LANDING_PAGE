@@ -102,20 +102,20 @@ const WhyAnimation = () => {
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         />
 
-        {/* Service orbit icons */}
-        <OrbitIcon icon="🏠" label="Home Visit"    angleDeg={-90} delay={0.8} />
-        <OrbitIcon icon="🩺" label="Clinic"        angleDeg={-10} delay={1.0} />
-        <OrbitIcon icon="💊" label="Prescriptions" angleDeg={70}  delay={1.2} />
-        <OrbitIcon icon="🧬" label="Diagnostics"   angleDeg={150} delay={1.4} />
-        <OrbitIcon icon="📱" label="Telehealth"    angleDeg={210} delay={1.6} />
-        <OrbitIcon icon="🧑‍⚕️" label="Caregivers"   angleDeg={280} delay={1.8} />
+        {/* Service orbit icons — evenly distributed every 60° to prevent overlap */}
+        <OrbitIcon icon="🏠"   label="Home Visit"    angleDeg={-90}  delay={0.8} />
+        <OrbitIcon icon="🩺"   label="Clinic"        angleDeg={-30}  delay={1.0} />
+        <OrbitIcon icon="💊"   label="Prescriptions" angleDeg={30}   delay={1.2} />
+        <OrbitIcon icon="🧬"   label="Diagnostics"   angleDeg={90}   delay={1.4} />
+        <OrbitIcon icon="📱"   label="Telehealth"    angleDeg={150}  delay={1.6} />
+        <OrbitIcon icon="🧑‍⚕️" label="Caregivers"    angleDeg={210}  delay={1.8} />
 
-        {/* Central card */}
+        {/* Central card — kept compact so the orbit icons breathe around it */}
         <motion.div
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, type: "spring" }}
-          className="absolute inset-0 m-auto w-20 h-20 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 shadow-2xl shadow-emerald-500/40"
+          className="absolute inset-0 m-auto w-14 h-14 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 shadow-2xl shadow-emerald-500/40"
         >
           {/* Pulse rings */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -123,8 +123,8 @@ const WhyAnimation = () => {
             <PulseRing delay={1} />
           </div>
 
-          <span className="text-2xl z-10">✚</span>
-          <span className="text-[8px] font-extrabold text-white/90 tracking-widest uppercase mt-0.5 z-10">
+          <span className="text-base leading-none z-10">✚</span>
+          <span className="text-[6px] font-extrabold text-white/90 tracking-widest uppercase mt-0.5 z-10">
             Curex24
           </span>
         </motion.div>
@@ -175,12 +175,12 @@ const WhyAnimation = () => {
         </div>
       </motion.div>
 
-      {/* Floating badge — live */}
+      {/* Floating badge — live (placed near top-left so it never overlaps the stats row) */}
       <motion.div
         initial={{ opacity: 0, x: -30, y: 10 }}
         animate={{ opacity: 1, x: 0, y: 0 }}
         transition={{ delay: 2.6, duration: 0.6 }}
-        className="absolute -left-4 bottom-24 hidden sm:flex glass-card items-center gap-2 px-3 py-2 float-y shadow-xl"
+        className="absolute -left-4 top-4 hidden sm:flex glass-card items-center gap-2 px-3 py-2 float-y shadow-xl"
         style={{ animationDelay: "-4s" }}
       >
         <span className="pulse-dot w-2 h-2" />
