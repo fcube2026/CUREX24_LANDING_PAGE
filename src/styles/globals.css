@@ -577,14 +577,6 @@ body > .aurora-fixed {
   scroll-snap-stop: normal;
 }
 
-/* Footer wrapper: snap its END to the viewport bottom so there is no
-   blank/empty area visible underneath the footer when the user reaches
-   the bottom of the page. */
-.snap-section-end {
-  scroll-snap-align: end;
-  scroll-snap-stop: normal;
-}
-
 /* ==========================================================
    TOUCH & INTERACTION IMPROVEMENTS
    ========================================================== */

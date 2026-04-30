@@ -1,33 +1,4 @@
-import { motion, useAnimationFrame } from "framer-motion";
-import { useRef, useState } from "react";
-
-/* ── Tiny animated counter ───────────────────────────────── */
-function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
-  const [val, setVal] = useState(0);
-  const started = useRef(false);
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useAnimationFrame(() => {
-    if (!ref.current) return;
-    if (!started.current) {
-      const rect = ref.current.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.95) started.current = true;
-    }
-    if (started.current) {
-      setVal((prev) => {
-        if (prev >= to) return to;
-        return Math.min(prev + Math.ceil((to - prev) / 18), to);
-      });
-    }
-  });
-
-  return (
-    <span ref={ref}>
-      {val}
-      {suffix}
-    </span>
-  );
-}
+import { motion } from "framer-motion";
 
 /* ── Pulsing ring ─────────────────────────────────────────── */
 function PulseRing({ delay = 0 }: { delay?: number }) {
@@ -129,34 +100,6 @@ const WhyAnimation = () => {
           </span>
         </motion.div>
       </div>
-
-      {/* Stats row */}
-      <motion.div
-        className="mt-6 grid grid-cols-3 gap-3"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2, duration: 0.6 }}
-      >
-        {[
-          { icon: "⚡", value: 4,   suffix: "m",  label: "Avg Wait" },
-          { icon: "👨‍⚕️", value: 240, suffix: "+", label: "Doctors" },
-          { icon: "⭐", value: 98,  suffix: "%",  label: "Satisfied" },
-        ].map(({ icon, value, suffix, label }, i) => (
-          <motion.div
-            key={label}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.1 + i * 0.1 }}
-            className="glass-card rounded-2xl p-3 text-center"
-          >
-            <div className="text-xl leading-none">{icon}</div>
-            <div className="text-sm font-extrabold text-gray-800 mt-1">
-              <Counter to={value} suffix={suffix} />
-            </div>
-            <div className="text-[9px] text-gray-500 mt-0.5">{label}</div>
-          </motion.div>
-        ))}
-      </motion.div>
 
       {/* Floating badge — instant booking */}
       <motion.div
