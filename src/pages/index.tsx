@@ -8,7 +8,6 @@ import Hero from "../components/Hero";
 import TrustBadges from "../components/TrustBadges";
 import WhatCurex24Does from "../components/WhatCurex24Does";
 import WhyChooseUs from "../components/WhyChooseUs";
-import AppPreviewCarousel from "../components/AppPreviewCarousel";
 import About from "../components/About";
 import CTA from "../components/CTA";
 import Footer from "../components/Footer";
@@ -60,8 +59,6 @@ export default function Home() {
       {/* NEW SECTIONS END */}
 
       <div className="snap-section"><WhyChooseUs /></div>
-
-      <div className="snap-section"><AppPreviewCarousel /></div>
 
       <div className="snap-section"><About /></div>
 
