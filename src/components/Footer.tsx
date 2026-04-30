@@ -79,7 +79,7 @@ const Footer = () => {
           </p>
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="mt-4 flex items-center gap-2 bg-white/80 border border-white/70 rounded-xl p-1.5 shadow-sm focus-within:border-emerald-400"
+            className="mt-4 flex items-center gap-2 bg-white/80 border border-white/70 rounded-xl p-1.5 shadow-sm focus-within:border-emerald-400 max-w-xs"
           >
             <label htmlFor="footer-newsletter-email" className="sr-only">
               Email address
@@ -89,11 +89,11 @@ const Footer = () => {
               type="email"
               required
               placeholder="you@email.com"
-              className="flex-1 bg-transparent px-3 py-2 text-sm text-gray-800 placeholder-gray-400 focus:outline-none"
+              className="flex-1 min-w-0 bg-transparent px-3 py-2 text-sm text-gray-800 placeholder-gray-400 focus:outline-none"
             />
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 text-white text-sm font-semibold hover:opacity-90 transition"
+              className="px-4 py-2 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 text-white text-sm font-semibold whitespace-nowrap hover:opacity-90 transition"
             >
               Notify me
             </button>
