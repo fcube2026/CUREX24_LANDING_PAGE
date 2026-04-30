@@ -1,7 +1,6 @@
 import ScrollProgressBar from "../components/ScrollProgressBar";
 import FloatingChatButton from "../components/FloatingChatButton";
 import AuroraBackground from "../components/AuroraBackground";
-import CursorGlow from "../components/CursorGlow";
 import LogoMarquee from "../components/LogoMarquee";
 
 import Navbar from "../components/Navbar";
@@ -30,7 +29,6 @@ export default function Home() {
 
     <>
       <AuroraBackground />
-      <CursorGlow />
       <ScrollProgressBar />
 
       <Navbar />
@@ -69,7 +67,7 @@ export default function Home() {
 
       <div className="snap-section"><CTA /></div>
 
-      <div className="snap-section"><Footer /></div>
+      <Footer />
 
       <FloatingChatButton />
 
