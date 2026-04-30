@@ -115,7 +115,7 @@ const WhyAnimation = () => {
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, type: "spring" }}
-          className="absolute inset-0 m-auto w-32 h-32 flex flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-emerald-400 to-teal-500 shadow-2xl shadow-emerald-500/40"
+          className="absolute inset-0 m-auto w-20 h-20 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 shadow-2xl shadow-emerald-500/40"
         >
           {/* Pulse rings */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -123,8 +123,8 @@ const WhyAnimation = () => {
             <PulseRing delay={1} />
           </div>
 
-          <span className="text-4xl z-10">✚</span>
-          <span className="text-[10px] font-extrabold text-white/90 tracking-widest uppercase mt-1 z-10">
+          <span className="text-2xl z-10">✚</span>
+          <span className="text-[8px] font-extrabold text-white/90 tracking-widest uppercase mt-0.5 z-10">
             Curex24
           </span>
         </motion.div>
