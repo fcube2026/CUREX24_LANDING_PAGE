@@ -2,9 +2,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
-  { href: "#about", label: "About" },
   { href: "#services", label: "Services" },
+  { href: "#how", label: "How it works" },
   { href: "#why", label: "Why Us" },
+  { href: "#partner", label: "Partner" },
+  { href: "#about", label: "About" },
 ];
 
 const Navbar = () => {

@@ -17,8 +17,11 @@ import ServicesSection from "../components/ServicesSection";
 import HomeClinicSection from "../components/HomeClinicSection";
 import HowItWorks from "../components/HowItWorks";
 import CareOptions from "../components/CareOptions";
+import Differentiators from "../components/Differentiators";
 import PatientsProviders from "../components/PatientsProviders";
 import PartnerSection from "../components/PartnerSection";
+import Testimonials from "../components/Testimonials";
+import ConversionCTA from "../components/ConversionCTA";
 
 export default function Home() {
 
@@ -44,17 +47,23 @@ export default function Home() {
 
       <div className="snap-section"><HomeClinicSection /></div>
 
-      <div className="snap-section"><HowItWorks /></div>
+      <div id="how" className="snap-section"><HowItWorks /></div>
 
       <div className="snap-section"><CareOptions /></div>
+
+      <div className="snap-section"><Differentiators /></div>
 
       <div className="snap-section"><PatientsProviders /></div>
 
       <div className="snap-section"><PartnerSection /></div>
 
+      <div className="snap-section"><Testimonials /></div>
+
       {/* NEW SECTIONS END */}
 
       <div className="snap-section"><WhyChooseUs /></div>
+
+      <div className="snap-section"><ConversionCTA /></div>
 
       <div className="snap-section"><About /></div>
 

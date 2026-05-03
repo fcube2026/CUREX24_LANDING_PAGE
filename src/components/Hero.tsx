@@ -50,23 +50,72 @@ const Hero = () => {
             <span className="gradient-text inline-block align-baseline">
               for you.
             </span>
+            <span className="block mt-2 text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-gray-800">
+              Anywhere. Anytime. <span className="gradient-text">Instantly.</span>
+            </span>
           </h1>
 
           {/* Description */}
           <p className="mt-6 text-base sm:text-lg text-gray-600 max-w-xl mx-auto md:mx-0 leading-relaxed">
-            Curex24 connects you with trusted doctors, therapists and caregivers
-            <span className="font-semibold text-emerald-700"> instantly</span> —
-            at home or in the clinic, whenever you need care.
+            Curex24 brings <span className="font-semibold text-emerald-700">trusted doctors, nurses, therapists and caregivers</span> straight
+            to your home, clinic, or phone — matched in seconds, verified for life.
+            Care that actually meets you where you are.
           </p>
 
           {/* CTAs */}
-          <div className="mt-9 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <div className="mt-9 flex flex-col sm:flex-row flex-wrap gap-4 justify-center md:justify-start">
             <WishlistButton />
-            <a href="#about" className="btn-secondary" data-cursor>
-              Learn more
+            <a href="#partner" className="btn-secondary" data-cursor>
+              Become a Partner
               <span aria-hidden>→</span>
             </a>
+            <a href="#services" className="btn-ghost" data-cursor>
+              Explore Services
+            </a>
           </div>
+
+          {/* Live trust strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 justify-center md:justify-start text-xs sm:text-sm text-emerald-800/80"
+          >
+            <span className="inline-flex items-center gap-1.5">
+              <span className="pulse-dot" aria-hidden></span>
+              Verified providers
+            </span>
+            <span className="opacity-40">•</span>
+            <span>🏠 Home · 🏥 Clinic · 🎥 Video</span>
+            <span className="opacity-40 hidden sm:inline">•</span>
+            <span className="hidden sm:inline">⚡ Matched in seconds</span>
+          </motion.div>
+
+          {/* Quick stats row */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.55 }}
+            className="mt-8 grid grid-cols-3 gap-3 max-w-md mx-auto md:mx-0"
+          >
+            {[
+              { v: "24/7", l: "Care access" },
+              { v: "100%", l: "Verified" },
+              { v: "<2 min", l: "Avg. match" },
+            ].map((s) => (
+              <div
+                key={s.l}
+                className="glass-card px-3 py-3 text-center"
+              >
+                <div className="text-lg sm:text-xl font-extrabold gradient-text leading-none">
+                  {s.v}
+                </div>
+                <div className="mt-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-gray-600">
+                  {s.l}
+                </div>
+              </div>
+            ))}
+          </motion.div>
         </motion.div>
 
         {/* RIGHT — Hero animation */}
