@@ -22,7 +22,7 @@ export default function ServiceCard({
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: index * 0.06 }}
       whileHover={{ y: -6 }}
-      className="grad-card text-left h-full flex flex-col"
+      className="grad-card text-left h-full flex flex-col group"
     >
       <div className="flex items-start justify-between">
         <div className="icon-tile" aria-hidden>
