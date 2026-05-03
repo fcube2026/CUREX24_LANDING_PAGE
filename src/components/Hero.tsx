@@ -96,12 +96,11 @@ const Hero = () => {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55 }}
-            className="mt-8 grid grid-cols-3 gap-3 max-w-md mx-auto md:mx-0"
+            className="mt-8 grid grid-cols-2 gap-3 max-w-md mx-auto md:mx-0"
           >
             {[
               { v: "24/7", l: "Care access" },
               { v: "100%", l: "Verified" },
-              { v: "<2 min", l: "Avg. match" },
             ].map((s) => (
               <div
                 key={s.l}
