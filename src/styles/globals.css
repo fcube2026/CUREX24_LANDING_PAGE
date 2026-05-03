@@ -175,6 +175,31 @@ body > * { position: relative; z-index: 1; }
   box-shadow: 0 10px 24px rgba(16,185,129,0.18);
 }
 
+/* Tertiary "ghost" link-style CTA */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 13px 22px;
+  border-radius: 14px;
+  font-weight: 600;
+  color: #047857;
+  background: transparent;
+  border: 1px dashed rgba(16,185,129,0.45);
+  transition: all .25s ease;
+}
+.btn-ghost:hover {
+  background: rgba(16,185,129,0.08);
+  border-style: solid;
+  color: #065F46;
+  transform: translateY(-1px);
+}
+.dark .btn-ghost {
+  color: #A7F3D0;
+  border-color: rgba(52,211,153,0.45);
+}
+
 /* ==========================================================
    GRADIENT TEXT
    ========================================================== */
@@ -641,4 +666,185 @@ p a,
   box-shadow:
     0 1px 0 rgba(255,255,255,0.04) inset,
     0 6px 18px rgba(0,0,0,0.50);
+}
+
+/* ==========================================================
+   GRADIENT-BORDER PREMIUM CARD (used by enhanced sections)
+   ========================================================== */
+
+.grad-card {
+  position: relative;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  padding: 1.75rem;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.7) inset,
+    0 14px 36px rgba(2,32,24,0.08),
+    0 2px 6px rgba(2,32,24,0.04);
+  transition:
+    transform 0.4s cubic-bezier(.2,.8,.2,1),
+    box-shadow 0.4s ease;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.grad-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(52,211,153,0.55), rgba(20,184,166,0.45) 45%, rgba(255,255,255,0) 70%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.grad-card::after {
+  content: "";
+  position: absolute;
+  inset: -40% -40% auto auto;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(closest-side, rgba(52,211,153,0.18), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transition: transform .6s ease;
+}
+
+.grad-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.8) inset,
+    0 22px 46px rgba(16,185,129,0.20),
+    0 6px 14px rgba(2,32,24,0.06);
+}
+
+.grad-card:hover::after {
+  transform: translate(-10%, 10%) scale(1.1);
+}
+
+.grad-card > * { position: relative; z-index: 2; }
+
+.dark .grad-card {
+  background: rgba(15,23,42,0.65);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.04) inset,
+    0 14px 36px rgba(0,0,0,0.5);
+}
+
+/* Icon tile inside premium cards */
+.icon-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, rgba(52,211,153,0.18), rgba(20,184,166,0.12));
+  border: 1px solid rgba(16,185,129,0.25);
+  color: #047857;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    0 6px 14px rgba(16,185,129,0.12);
+}
+
+.dark .icon-tile {
+  background: linear-gradient(135deg, rgba(52,211,153,0.25), rgba(20,184,166,0.15));
+  color: #A7F3D0;
+}
+
+/* ==========================================================
+   STEP LINE (HowItWorks connector)
+   ========================================================== */
+
+.step-line {
+  position: relative;
+}
+.step-line::before {
+  content: "";
+  position: absolute;
+  top: 36px;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(16,185,129,0.45) 0 8px,
+    transparent 8px 16px
+  );
+  z-index: 0;
+}
+@media (max-width: 767px) {
+  .step-line::before { display: none; }
+}
+
+.step-bubble {
+  position: relative;
+  z-index: 1;
+  width: 72px;
+  height: 72px;
+  margin-inline: auto;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: white;
+  background: linear-gradient(135deg, #34D399 0%, #10B981 50%, #0EA5A0 100%);
+  box-shadow:
+    0 10px 24px rgba(16,185,129,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.45);
+}
+
+.step-bubble::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  border: 1.5px dashed rgba(16,185,129,0.5);
+  animation: spin 18s linear infinite;
+}
+
+/* ==========================================================
+   SOFT FLOAT (gentler than .float-y)
+   ========================================================== */
+
+.soft-float {
+  animation: softFloat 7s ease-in-out infinite;
+}
+@keyframes softFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* ==========================================================
+   CURVED SECTION DIVIDER
+   ========================================================== */
+
+.curve-divider-top,
+.curve-divider-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.curve-divider-top {
+  top: -1px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'><path d='M0,60 C360,0 1080,0 1440,60 L1440,0 L0,0 Z' fill='%23ECFBF3'/></svg>");
+}
+.curve-divider-bottom {
+  bottom: -1px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'><path d='M0,0 C360,60 1080,60 1440,0 L1440,60 L0,60 Z' fill='%23ECFBF3'/></svg>");
 }
