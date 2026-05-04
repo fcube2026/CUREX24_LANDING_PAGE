@@ -64,8 +64,10 @@ const Hero = () => {
 
           {/* CTAs */}
           <div className="mt-9 flex flex-col sm:flex-row flex-wrap gap-4 justify-center md:justify-start">
-            <WishlistButton />
-            <a href="#partner" className="btn-secondary" data-cursor>
+            <span data-magnetic className="inline-flex">
+              <WishlistButton />
+            </span>
+            <a href="#partner" className="btn-secondary" data-cursor data-magnetic>
               Become a Partner
               <span aria-hidden>→</span>
             </a>
@@ -105,6 +107,7 @@ const Hero = () => {
               <div
                 key={s.l}
                 className="glass-card px-3 py-3 text-center"
+                data-tilt
               >
                 <div className="text-lg sm:text-xl font-extrabold gradient-text leading-none">
                   {s.v}
